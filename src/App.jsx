@@ -2,7 +2,9 @@ import logo from "./logo.svg";
 import "./App.css";
 
 function App() {
-  return <>Đồ án tốt nghiệp Châu Long</>;
+  return <div>
+    Giang test
+  </div>;
 }
 
 export default App;
