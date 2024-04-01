@@ -1,10 +1,7 @@
-import logo from "./logo.svg";
 import "./App.css";
 
 function App() {
-  return <div>
-    Giang test
-  </div>;
+  return <div className="text-red-500 text-2xl">Giang test</div>;
 }
 
 export default App;
