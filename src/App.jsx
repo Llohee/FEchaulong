@@ -1,8 +1,7 @@
-import logo from "./logo.svg";
 import "./App.css";
 
 function App() {
-  return <>Đồ án tốt nghiệp Châu Long</>;
+  return <div className="text-red-500 text-2xl">Giang test</div>;
 }
 
 export default App;
