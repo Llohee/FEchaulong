@@ -4,6 +4,7 @@ import Login from "./component/login/login";
 // import PublicRoute from "./page/PublicRoute";
 // import Dashboard from "./component/Dashboard/dasboard";
 import PrivateRoute from "./page/PrivateRoute";
+import Loginstd from "./component/login/loginstd";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         </Route>
         <Route element={<PublicRoute />}> */}
         <Route path="" element={<Login />} />
+        <Route path="/loginstd" element={<Loginstd />} />
         {/* <Route path="register" element={<Register />} /> */}
         {/* </Route> */}
         <Route path="*" element={<>Not Found</>} />
