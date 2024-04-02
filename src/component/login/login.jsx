@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Loginsvg_1 from "../../images/Loginsvg_1.svg";
 import Loginsvg_2 from "../../images/Loginsvg_2.svg";
 import Loginsvg_3 from "../../images/Loginsvg_3.svg";
@@ -6,12 +6,28 @@ import Loginsvg_4 from "../../images/Loginsvg_4.svg";
 import Loginsvg_5 from "../../images/Loginsvg_5.svg";
 import Loginsvg_6 from "../../images/Loginsvg_6.svg";
 import Loginsvg_7 from "../../images/Loginsvg_7.svg";
+import {
+  BgLeft1Variants,
+  BgLeft2Variants,
+  BgLeft3Variants,
+  BgRight1Variants,
+  FormLogin,
+} from "../../animation/loginanimation";
+import { motion } from "framer-motion";
 const Login = () => {
   return (
-    <div className="bg-[#2148C0] h-screen inset-0 bg-cover relative">
+    <div className="bg-[#2148C0] h-screen inset-0 bg-cover relative overflow-hidden">
       <Loginsvg />
-      <div className="absolute flex flex-col gap-12 m-auto w-full h-full z-100">
-        <div className="bg-[#2244a7] w-[500px] min-h-[461.78px] flex flex-col gap-12 py-12 px-6 max-w-[100vw] rounded-lg m-auto md:border-2 md:shadow-2xlxl shadow-grey-9">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        className="absolute flex flex-col gap-12 m-auto w-full h-full z-50 "
+      >
+        <motion.div
+          variants={FormLogin}
+          custom={0}
+          className="bg-[#2244a7] w-[500px] min-h-[461.78px] flex flex-col gap-12 py-12 px-6 max-w-[100vw] rounded-lg m-auto md:border-2 md:shadow-2xlxl shadow-grey-9"
+        >
           <div className="flex flex-col w-full items-center justify-center gap-16">
             <img src={Loginsvg_5} alt="" />
             <div className="flex flex-col gap-6 w-full">
@@ -43,28 +59,44 @@ const Login = () => {
               </button>
             </div>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 };
 
 const Loginsvg = () => {
   return (
-    <div className="">
-      <div className="absolute right-0">
+    <motion.div initial="hidden" animate="visible" className="">
+      <motion.div
+        variants={BgRight1Variants}
+        custom={0}
+        className="absolute right-0"
+      >
         <img src={Loginsvg_1} />
-      </div>
-      <div className="absolute left-0 bottom-0 z-10">
+      </motion.div>
+      <motion.div
+        variants={BgLeft1Variants}
+        custom={1}
+        className="absolute left-0 bottom-0 z-10"
+      >
         <img src={Loginsvg_2} />
-      </div>
-      <div className="absolute left-0 bottom-0">
+      </motion.div>
+      <motion.div
+        variants={BgLeft2Variants}
+        custom={0}
+        className="absolute left-0 bottom-0"
+      >
         <img src={Loginsvg_3} />
-      </div>
-      <div className="absolute left-0 bottom-0">
+      </motion.div>
+      <motion.div
+        variants={BgLeft3Variants}
+        custom={0}
+        className="absolute left-0 bottom-0"
+      >
         <img src={Loginsvg_4} />
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 
