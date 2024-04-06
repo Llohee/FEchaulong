@@ -1,9 +1,9 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Login from "./component/login/login";
-// import PublicRoute from "./page/PublicRoute";
-// import Dashboard from "./component/Dashboard/dasboard";
 import PrivateRoute from "./page/PrivateRoute";
+import LoginRegister from "./page/LoginRegister";
+import PublicRoute from "./page/PublicRoute";
+// import Dashboard from "./component/Dashboard/dasboard";
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
           <Route path="user" element={<User />} />
         </Route>
         <Route element={<PublicRoute />}> */}
-        <Route path="" element={<Login />} />
+        <Route path="" element={<LoginRegister />} />
         {/* <Route path="register" element={<Register />} /> */}
         {/* </Route> */}
         <Route path="*" element={<>Not Found</>} />
