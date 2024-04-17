@@ -3,10 +3,10 @@ import { motion } from "framer-motion";
 import { Tab } from "@headlessui/react";
 import { FormLogin } from "../../animation/loginanimation";
 import Loginsvg_5 from "../../images/Loginsvg_5.svg";
-import LoginStudentForm from "./Student/loginform";
+import LoginStudentForm from "./student/loginform";
 import LoginTeacherForm from "./teacher/loginform";
 
-const LoginRegisterForm = () => {
+const LoginForm = () => {
   let [categories] = useState({
     Student: [
       {
@@ -40,7 +40,7 @@ const LoginRegisterForm = () => {
             <Tab.List className="flex gap-10" onFocus={null}>
               {Object.keys(categories).map((category) => (
                 <Tab
-                onFocus={null}
+                  onFocus={null}
                   key={category}
                   className={({ selected }) =>
                     selected
@@ -70,4 +70,4 @@ const LoginRegisterForm = () => {
   );
 };
 
-export default LoginRegisterForm;
+export default LoginForm;
