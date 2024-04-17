@@ -8,15 +8,14 @@ import {
   BgLeft2Variants,
   BgLeft3Variants,
   BgRight1Variants,
-  FormLogin,
 } from "../animation/loginanimation";
+import LoginForm from "../component/Login/index";
 import { motion } from "framer-motion";
-import LoginRegisterForm from "../component/login_register";
 
-const LoginRegister = () => {
+const Login = () => {
   return (
     <div className="bg-[#2148C0] h-screen inset-0 bg-cover relative overflow-hidden">
-      <LoginRegisterForm />
+      <LoginForm />
       <motion.div initial="hidden" animate="visible" className="">
         <motion.div
           variants={BgRight1Variants}
@@ -51,4 +50,4 @@ const LoginRegister = () => {
   );
 };
 
-export default LoginRegister;
+export default Login;

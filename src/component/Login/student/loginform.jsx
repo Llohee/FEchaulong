@@ -1,25 +1,18 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Loginsvg_6 from "../../../images/Loginsvg_6.svg";
 import Loginsvg_7 from "../../../images/Loginsvg_7.svg";
 import { Row, Col, Form } from "antd";
-import { useLoginForm } from "./hook";
-import { useNavigate } from "react-router-dom";
+import { useLoginForm } from "../../../api/login-api";
+import { emailRegex, passwordRegex } from "../../../hooks/regex";
 
 const LoginStudentForm = () => {
-  const navigate = useNavigate();
-
-  const { handleFormSubmit, onFinishFailed, success } = useLoginForm();
-  useEffect(() => {
-    if (success) {
-      navigate("/home");
-    }
-  }, [success, navigate]);
+  const { handleFormSubmit, onFinishFailed, errorMessage } = useLoginForm();
   return (
     <Form
       onFinish={handleFormSubmit}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
-      className="w-96 flex flex-col items-center justify-center gap-16"
+      className="w-96 flex flex-col gap-16"
     >
       <Row className="w-full flex flex-col gap-6">
         <Form.Item
@@ -27,7 +20,12 @@ const LoginStudentForm = () => {
           rules={[
             {
               required: true,
-              message: "Please input your username!",
+              message: "Hãy điền email!",
+            },
+            {
+              pattern: emailRegex,
+              message:
+                "Sai định dạng Email",
             },
           ]}
           className="py-6 px-3 rounded border border-white"
@@ -39,10 +37,10 @@ const LoginStudentForm = () => {
             <Col>
               <input
                 name="email"
-                placeholder="TÊN ĐĂNG NHẬP"
+                placeholder="Email"
                 type="text"
                 onFocus={null}
-                className="h-8 bg-inherit focus:outline-none w-full text-white"
+                className="text-lg h-8 bg-inherit focus:outline-none w-80  text-white"
               ></input>
             </Col>
           </Row>
@@ -52,7 +50,12 @@ const LoginStudentForm = () => {
           rules={[
             {
               required: true,
-              message: "Please input your password!",
+              message: "Hãy điền mật khẩu!",
+            },
+            {
+              pattern: passwordRegex,
+              message:
+                "Ít nhất 9 kí tự bao gồm chữ hoa, chữ thường, số và kí tự đặc biệt",
             },
           ]}
           className="py-6 px-3 rounded border border-white"
@@ -64,10 +67,10 @@ const LoginStudentForm = () => {
             <Col>
               <input
                 name="password"
-                placeholder="MẬT KHẨU"
+                placeholder="Mật khẩu"
                 type="password"
                 onFocus={null}
-                className="h-8 bg-inherit focus:outline-none w-full text-white"
+                className="text-lg w-80 h-8 bg-inherit focus:outline-none text-white"
               ></input>
             </Col>
           </Row>
@@ -77,10 +80,13 @@ const LoginStudentForm = () => {
         <button
           type="primary"
           htmlType="submit"
-          className="py-2 rounded border-none bg-white text-[#2148C0] text-xl"
+          className="py-4 rounded border-none bg-white text-[#2148C0] text-xl"
         >
           Đăng nhập
         </button>
+        {errorMessage && (
+          <div className="text-red-500 text-end">{errorMessage}</div>
+        )}
       </Row>
     </Form>
   );
