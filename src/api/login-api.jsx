@@ -40,7 +40,6 @@ export const useLoginForm = () => {
           },
         });
         setUserRole(response.data.role);
-        console.log(response.data.role);
       } catch (error) {
         console.error("Error fetching user role:", error);
       }

@@ -182,7 +182,7 @@ const UserCreateForm = ({ closeModal }) => {
           <div className="text-red-500 text-end px-4">{errorMessage}</div>
         )}
       </Row>
-      <Row className="flex justify-between px-6 py-4 shadow-top shadow-2xl bg-white sticky bottom-0 ">
+      <Row className="flex justify-between px-6 py-4 shadow-top bg-white sticky bottom-0 ">
         <Col>
           <button onClick={closeModal}>Hủy</button>
         </Col>

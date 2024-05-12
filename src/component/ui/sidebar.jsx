@@ -1,18 +1,197 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLoginForm } from "../../api/login-api";
 import Button from "./button/button";
 import { useNavigate } from "react-router-dom";
+import Students from "../../page/StudentsPage";
 
 const Sidebar = () => {
   const { userRole } = useLoginForm();
   const navigate = useNavigate();
-
+  const SlideItems = useState([
+    {
+      title: Students.title,
+      content: "Học sinh",
+      svg: (
+        <svg
+          width="70px"
+          height="70px"
+          viewBox="-12 -15 48.00 48.00"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            id="SVGRepo_bgCarrier"
+            stroke-width="0"
+            transform="translate(4.199999999999999,4.199999999999999), scale(0.65)"
+          >
+            <path
+              transform="translate(-12, -12), scale(3)"
+              fill="#c4b5fd"
+              d="M9.166.33a2.25 2.25 0 00-2.332 0l-5.25 3.182A2.25 2.25 0 00.5 5.436v5.128a2.25 2.25 0 001.084 1.924l5.25 3.182a2.25 2.25 0 002.332 0l5.25-3.182a2.25 2.25 0 001.084-1.924V5.436a2.25 2.25 0 00-1.084-1.924L9.166.33z"
+              strokewidth="0"
+            ></path>
+          </g>
+          <g
+            id="SVGRepo_tracerCarrier"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke="#CCCCCC"
+            stroke-width="0.048"
+          ></g>
+          <g id="SVGRepo_iconCarrier">
+            {" "}
+            <path
+              d="M4 21C4 17.4735 6.60771 14.5561 10 14.0709M19.8726 15.2038C19.8044 15.2079 19.7357 15.21 19.6667 15.21C18.6422 15.21 17.7077 14.7524 17 14C16.2923 14.7524 15.3578 15.2099 14.3333 15.2099C14.2643 15.2099 14.1956 15.2078 14.1274 15.2037C14.0442 15.5853 14 15.9855 14 16.3979C14 18.6121 15.2748 20.4725 17 21C18.7252 20.4725 20 18.6121 20 16.3979C20 15.9855 19.9558 15.5853 19.8726 15.2038ZM15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z"
+              stroke="#ffffff"
+              stroke-width="2.4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>{" "}
+          </g>
+        </svg>
+      ),
+      onlyFor: ['admin']
+    },
+    {
+      title: Students.title,
+      content: "Học sinh",
+      svg: (
+        <svg
+          width="70px"
+          height="70px"
+          viewBox="-12 -15 48.00 48.00"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            id="SVGRepo_bgCarrier"
+            stroke-width="0"
+            transform="translate(4.199999999999999,4.199999999999999), scale(0.65)"
+          >
+            <path
+              transform="translate(-12, -12), scale(3)"
+              fill="#c4b5fd"
+              d="M9.166.33a2.25 2.25 0 00-2.332 0l-5.25 3.182A2.25 2.25 0 00.5 5.436v5.128a2.25 2.25 0 001.084 1.924l5.25 3.182a2.25 2.25 0 002.332 0l5.25-3.182a2.25 2.25 0 001.084-1.924V5.436a2.25 2.25 0 00-1.084-1.924L9.166.33z"
+              strokewidth="0"
+            ></path>
+          </g>
+          <g
+            id="SVGRepo_tracerCarrier"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke="#CCCCCC"
+            stroke-width="0.048"
+          ></g>
+          <g id="SVGRepo_iconCarrier">
+            {" "}
+            <path
+              d="M4 21C4 17.4735 6.60771 14.5561 10 14.0709M19.8726 15.2038C19.8044 15.2079 19.7357 15.21 19.6667 15.21C18.6422 15.21 17.7077 14.7524 17 14C16.2923 14.7524 15.3578 15.2099 14.3333 15.2099C14.2643 15.2099 14.1956 15.2078 14.1274 15.2037C14.0442 15.5853 14 15.9855 14 16.3979C14 18.6121 15.2748 20.4725 17 21C18.7252 20.4725 20 18.6121 20 16.3979C20 15.9855 19.9558 15.5853 19.8726 15.2038ZM15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z"
+              stroke="#ffffff"
+              stroke-width="2.4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>{" "}
+          </g>
+        </svg>
+      ),
+      onlyFor: ['admin']
+    },
+    {
+      title: Students.title,
+      content: "Học sinh",
+      link: "/home/students",
+      svg: (
+        <svg
+          width="70px"
+          height="70px"
+          viewBox="-12 -15 48.00 48.00"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            id="SVGRepo_bgCarrier"
+            stroke-width="0"
+            transform="translate(4.199999999999999,4.199999999999999), scale(0.65)"
+          >
+            <path
+              transform="translate(-12, -12), scale(3)"
+              fill="#c4b5fd"
+              d="M9.166.33a2.25 2.25 0 00-2.332 0l-5.25 3.182A2.25 2.25 0 00.5 5.436v5.128a2.25 2.25 0 001.084 1.924l5.25 3.182a2.25 2.25 0 002.332 0l5.25-3.182a2.25 2.25 0 001.084-1.924V5.436a2.25 2.25 0 00-1.084-1.924L9.166.33z"
+              strokewidth="0"
+            ></path>
+          </g>
+          <g
+            id="SVGRepo_tracerCarrier"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke="#CCCCCC"
+            stroke-width="0.048"
+          ></g>
+          <g id="SVGRepo_iconCarrier">
+            {" "}
+            <path
+              d="M4 21C4 17.4735 6.60771 14.5561 10 14.0709M19.8726 15.2038C19.8044 15.2079 19.7357 15.21 19.6667 15.21C18.6422 15.21 17.7077 14.7524 17 14C16.2923 14.7524 15.3578 15.2099 14.3333 15.2099C14.2643 15.2099 14.1956 15.2078 14.1274 15.2037C14.0442 15.5853 14 15.9855 14 16.3979C14 18.6121 15.2748 20.4725 17 21C18.7252 20.4725 20 18.6121 20 16.3979C20 15.9855 19.9558 15.5853 19.8726 15.2038ZM15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z"
+              stroke="#ffffff"
+              stroke-width="2.4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>{" "}
+          </g>
+        </svg>
+      ),
+      onlyFor: ['admin']
+    },
+    {
+      title: Students.title,
+      content: "Học sinh",
+      svg: (
+        <svg
+          width="70px"
+          height="70px"
+          viewBox="-12 -15 48.00 48.00"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            id="SVGRepo_bgCarrier"
+            stroke-width="0"
+            transform="translate(4.199999999999999,4.199999999999999), scale(0.65)"
+          >
+            <path
+              transform="translate(-12, -12), scale(3)"
+              fill="#c4b5fd"
+              d="M9.166.33a2.25 2.25 0 00-2.332 0l-5.25 3.182A2.25 2.25 0 00.5 5.436v5.128a2.25 2.25 0 001.084 1.924l5.25 3.182a2.25 2.25 0 002.332 0l5.25-3.182a2.25 2.25 0 001.084-1.924V5.436a2.25 2.25 0 00-1.084-1.924L9.166.33z"
+              strokewidth="0"
+            ></path>
+          </g>
+          <g
+            id="SVGRepo_tracerCarrier"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke="#CCCCCC"
+            stroke-width="0.048"
+          ></g>
+          <g id="SVGRepo_iconCarrier">
+            {" "}
+            <path
+              d="M4 21C4 17.4735 6.60771 14.5561 10 14.0709M19.8726 15.2038C19.8044 15.2079 19.7357 15.21 19.6667 15.21C18.6422 15.21 17.7077 14.7524 17 14C16.2923 14.7524 15.3578 15.2099 14.3333 15.2099C14.2643 15.2099 14.1956 15.2078 14.1274 15.2037C14.0442 15.5853 14 15.9855 14 16.3979C14 18.6121 15.2748 20.4725 17 21C18.7252 20.4725 20 18.6121 20 16.3979C20 15.9855 19.9558 15.5853 19.8726 15.2038ZM15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z"
+              stroke="#ffffff"
+              stroke-width="2.4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>{" "}
+          </g>
+        </svg>
+      ),
+      onlyFor: ['admin']
+    }
+  ])
   return (
-    <div className="h-screen bg-violet-1 w-20 flex flex-col gap-6 items-center fixed top-0 left-0 z-[500] border-r-2 border-border-1 pt-[70px]">
+    <div className="h-screen bg-violet-500 w-20 flex flex-col gap-6 items-center fixed top-0 left-0 z-[500] border-r-2 border-border-1 pt-[70px]">
       {userRole.includes("admin") && (
         <button
           className="text-white"
-          onClick={() => navigate("/home/students")}
+          onClick={() => navigate("/students")}
         >
           <svg
             width="70px"
@@ -54,7 +233,7 @@ const Sidebar = () => {
           Học sinh
         </button>
       )}
-      <button className="text-white">
+      <button className="text-white hover:bg-violet-2 w-full" onClick={() => navigate("/teams")}>
         <svg
           height="54px"
           width="54px"

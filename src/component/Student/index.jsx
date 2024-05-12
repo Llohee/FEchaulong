@@ -7,7 +7,9 @@ const Student = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="sub_container flex flex-col gap-4">
+    <div className="sub_container flex flex-col gap-4 !overflow-hidden">
+      <div className="p-4">
+
       <div className="text-heading-5">Thông tin học sinh</div>
       <Button
         size={"small"}
@@ -16,7 +18,7 @@ const Student = () => {
         onClick={() => {
           setIsOpen(true);
         }}
-      >
+        >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -24,15 +26,16 @@ const Student = () => {
           strokeWidth={1.5}
           stroke="currentColor"
           className="w-6 h-6"
-        >
+          >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
             d="M12 4.5v15m7.5-7.5h-15"
-          />
+            />
         </svg>
         Tạo mới
       </Button>
+      </div>
       <StuTable />
       {isOpen && (
         <Createstudent isOpen={isOpen} closeModal={() => setIsOpen(false)} />

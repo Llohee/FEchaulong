@@ -81,11 +81,11 @@ const Header = () => {
           />
         </svg>
       ),
-    },
+    }, 
   ]);
 
   return (
-    <div className="bg-violet-1 border-b-4 border-border-1 black h-14 w-screen flex justify-between items-center px-4 top-0 fixed z-[1000]">
+    <div className="bg-violet-500 black h-14 w-screen flex justify-between items-center px-4 top-0 fixed z-[1000]">
       <button onClick={() => navigate("/home")}>
         <img src={HomeSVG} className="w-10 h-10" />
       </button>
@@ -152,6 +152,7 @@ const Header = () => {
         </Menu>
       </div>
     </div>
+    
   );
 };
 

@@ -98,7 +98,7 @@ const UserUpdateForm = ({ closeModal, studentDetail, isReset }) => {
           </Row>
         </Form.Item>
       </Row>
-      <Row className="flex justify-between px-6 py-4 shadow-top shadow-2xl bg-white sticky bottom-0 ">
+      <Row className="flex justify-between px-6 py-4 shadow-top bg-white sticky bottom-0 ">
         <Col>
           <button onClick={closeModal}>Hủy</button>
         </Col>
