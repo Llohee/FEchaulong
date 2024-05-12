@@ -3,6 +3,7 @@ import axios from "axios";
 
 export const useGetAllStudent = () => {
   const [getAllStudent, setGetAllStudent] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
   useEffect(() => {
     const Students = async () => {
       try {
@@ -14,7 +15,7 @@ export const useGetAllStudent = () => {
         });
         setGetAllStudent(data);
       } catch (error) {
-        console.error("Error fetch users", error);
+        setErrorMessage(error.response.data.message);
       }
     };
     Students();
@@ -48,5 +49,5 @@ export const useGetAllStudent = () => {
     }
   };
 
-  return { getAllStudent, updateStudent, deleteStudent };
+  return { getAllStudent, updateStudent, deleteStudent, errorMessage };
 };

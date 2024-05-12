@@ -40,12 +40,28 @@ export const useLoginForm = () => {
           },
         });
         setUserRole(response.data.role);
-        console.log(response.data.role);
       } catch (error) {
         console.error("Error fetching user role:", error);
       }
     };
     fetchUserRole();
+  }, []);
+  const [userLogin, setUserLogin] = useState({});
+  useEffect(() => {
+    const getUserLogin = async () => {
+      try {
+        const url = `${process.env.REACT_APP_PUBLIC_BACK_END_DOMAIN}/users/me`;
+        const response = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        setUserLogin(response.data);
+      } catch (error) {
+        console.error("Error fetching userlogin", error);
+      }
+    };
+    getUserLogin();
   }, []);
 
   return {
@@ -53,5 +69,6 @@ export const useLoginForm = () => {
     onFinishFailed,
     userRole,
     errorMessage,
+    userLogin,
   };
 };

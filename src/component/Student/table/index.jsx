@@ -3,6 +3,7 @@ import { Table } from "antd";
 import { useGetAllStudent } from "../../../api/students-api";
 import UpdateStudent from "../modal/update-student";
 import ConfirmDeleteStudent from "../modal/confirm-delete-student";
+import moment from "moment";
 
 const StuTable = () => {
   const [isShowModalUpdate, setIsShowModalUpdate] = useState(false);
@@ -26,6 +27,12 @@ const StuTable = () => {
       key: "fullname",
     },
     {
+      title: "Ngày tháng năm sinh",
+      dataIndex: "birthday",
+      key: "birthday",
+      render: (birthday) => moment(birthday).format("DD/MM/YYYY"),
+    },
+    {
       title: "Email",
       dataIndex: "email",
       key: "email",
@@ -34,6 +41,12 @@ const StuTable = () => {
       title: "Số điện thoại",
       dataIndex: "phone",
       key: "phone",
+    },
+    {
+      title: "Ngày tạo",
+      dataIndex: "create_date",
+      key: "create_date",
+      render: (create_date) => moment(create_date).format("HH:mm DD/MM/YYYY"),
     },
     {
       title: "Quyền hạn",
@@ -118,7 +131,7 @@ const StuTable = () => {
           }}
           studentDetail={studentchoose}
         />
-      )} 
+      )}
     </>
   );
 };

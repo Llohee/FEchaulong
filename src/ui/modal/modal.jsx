@@ -12,7 +12,7 @@ export function Modal(props) {
       >
         <Dialog
           as="div"
-          className="relative z-[2000] "
+          className="relative z-[2000]"
           onClose={props.closeModal}
         >
           <Transition.Child
@@ -30,7 +30,7 @@ export function Modal(props) {
           <div className="fixed inset-1 flex flex-col gap-3 items-center justify-center p-4 text-center">
             <button
               type="button"
-              className="flex justify-center bg-white rounded-full p-3 hover:bg-grey-3 items-center gap-1.5 whitespace-nowrap overflow-hidden tracking-wide transition-all duration-200 transform focus:outline-none active:focus:duration-0 disabled:cursor-not-allowed"
+              className="flex justify-center bg-violet-100 rounded-full p-3 hover:bg-grey-3 items-center gap-1.5 whitespace-nowrap overflow-hidden tracking-wide transition-all duration-200 transform focus:outline-none active:focus:duration-0 disabled:cursor-not-allowed"
               // onClick={props.closeModal}
             >
               <svg
@@ -62,7 +62,7 @@ export function Modal(props) {
                     props.size === "large" && "md:max-w-xl lg:max-w-2xl"
                   } ${
                     props.size === "xl" && "md:max-w-2xl lg:max-w-4xl"
-                  } transform overflow-hidden rounded-2xl bg-white p-0 text-left align-middle shadow-xl ${
+                  } transform overflow-hidden rounded-2xl bg-violet-100 p-0 text-left align-middle shadow-xl ${
                     props.className ?? ""
                   }`
                 }
@@ -73,7 +73,7 @@ export function Modal(props) {
                   {props.title && (
                     <Dialog.Title
                       as="h3"
-                      className={`w-full flex flex-shrink-0 items-center justify-between py-4 px-6 border-b border-border-2  bg-white z-50 text-heading-7 text-typography-title rounded-t-2xl ${
+                      className={`w-full flex flex-shrink-0 items-center justify-between py-4 px-6 border-b-white border  bg-violet-100/50 z-50 text-heading-7 text-typography-title rounded-t-2xl ${
                         props.hideBorder ? "!border-none" : ""
                       }`}
                     >

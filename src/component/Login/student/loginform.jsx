@@ -70,7 +70,7 @@ const LoginStudentForm = () => {
                 placeholder="Mật khẩu"
                 type="password"
                 onFocus={null}
-                className="text-lg w-80 h-8 bg-inherit focus:outline-none text-white"
+                className="text-lg w-80 h-8 bg-inherit focus:outline-none text-white "
               ></input>
             </Col>
           </Row>

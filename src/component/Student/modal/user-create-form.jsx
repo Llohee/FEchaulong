@@ -1,5 +1,5 @@
-import React from "react";
-import { Row, Col, Form, Input } from "antd";
+import React, { useEffect } from "react";
+import { Row, Col, Form, Input, DatePicker, Space } from "antd";
 import { useCreateStu } from "../../../api/create-stu";
 import {
   passwordRegex,
@@ -7,13 +7,15 @@ import {
   emailRegex,
   checkPhoneVN,
 } from "../../../hooks/regex";
-
 const UserCreateForm = ({ closeModal }) => {
   const { createStudent, onFinishFailed, errorMessage } = useCreateStu();
-
+  const handleSubmit = (values) => {
+    createStudent(values);
+    closeModal();
+  };
   return (
     <Form
-      onFinish={createStudent}
+      onFinish={handleSubmit}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
       className="flex flex-col gap-4 pt-4"
@@ -40,6 +42,24 @@ const UserCreateForm = ({ closeModal }) => {
               />
             </Col>
           </Row>
+        </Form.Item>
+        <Form.Item
+          name="birthday"
+          rules={[
+            {
+              required: true,
+              message: "Hãy điền ngày tháng năm sinh!",
+            },
+          ]}
+          className="px-3 rounded border border-white"
+        >
+          {/* <Space direction="vertical" className="w-full"> */}
+          <DatePicker
+            placeholder="DD-MM-YYYY"
+            format="DD-MM-YYYY"
+            className="w-full bg-slate-100 hover:bg-inherit"
+          />
+          {/* </Space> */}
         </Form.Item>
         <Form.Item
           name="email"
@@ -157,8 +177,12 @@ const UserCreateForm = ({ closeModal }) => {
             </Col>
           </Row>
         </Form.Item>
+
+        {errorMessage && (
+          <div className="text-red-500 text-end px-4">{errorMessage}</div>
+        )}
       </Row>
-      <Row className="flex justify-between px-6 py-4 shadow-top shadow-2xl bg-white sticky bottom-0 ">
+      <Row className="flex justify-between px-6 py-4 shadow-top bg-white sticky bottom-0 ">
         <Col>
           <button onClick={closeModal}>Hủy</button>
         </Col>
@@ -167,9 +191,6 @@ const UserCreateForm = ({ closeModal }) => {
             Tạo mới
           </button>
         </Col>
-        {errorMessage && (
-          <div className="text-red-500 text-end">{errorMessage}</div>
-        )}
       </Row>
     </Form>
   );
