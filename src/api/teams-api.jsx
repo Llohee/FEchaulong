@@ -18,7 +18,7 @@ export const useGetAllTeams = () => {
         });
         setAllTeams(data.teams);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     };
     if (userLogin) {

@@ -11,9 +11,9 @@ const PrivateRoute = (props) => {
     return <Navigate to={"/login"} replace />;
   }
   return (
-    <>
+    <div className="bg-violet-200 h-screen">
       <Outlet />
-    </>
+    </div>
   );
 };
 

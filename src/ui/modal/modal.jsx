@@ -58,10 +58,10 @@ export function Modal(props) {
             >
               <motion.div
                 className={
-                  `max-w-lg ${
+                  `max-w-3xl ${
                     props.size === "large" && "md:max-w-xl lg:max-w-2xl"
                   } ${
-                    props.size === "xl" && "md:max-w-2xl lg:max-w-4xl"
+                    props.size === "xl" && "md:max-w-2xl lg:max-w-5xl"
                   } transform overflow-hidden rounded-2xl bg-violet-100 p-0 text-left align-middle shadow-xl ${
                     props.className ?? ""
                   }`

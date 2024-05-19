@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, Outlet, useParams } from "react-router-dom";
 import { useGetAllTeams } from "../../api/teams-api";
 import TeamAvatar from "../../ui/avatar/teamavatar";
 import { Tab } from "@headlessui/react";
@@ -13,9 +13,11 @@ const TeamPage = () => {
     }
   }, [id]);
 
-  
   return (
-    <Team />
+    <>
+      {/* <Team /> */}
+      <Outlet />
+    </>
   );
 };
 

@@ -7,7 +7,7 @@ import Layout from "../ui/layout/layout";
 
 const Dashboard = () => {
   return (
-    <div className="relative bg-violet-200 h-screen">
+    <div className="relative">
       <Layout />
       <Outlet />
     </div>

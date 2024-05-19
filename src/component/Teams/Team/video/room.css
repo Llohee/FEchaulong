@@ -1,0 +1,15 @@
+
+.zego .zego-class {
+  color: #333; /* Màu văn bản */
+  background-color: #e5ce00; /* Màu nền */
+}
+
+/* Thêm các class cụ thể từ ZegoUIKitPrebuilt */
+.zego .zego-header {
+  background-color: #4CAF50; /* Màu nền của header */
+}
+
+.zego .zego-button {
+  background-color: #8a1df0; /* Màu nền của button */
+  color: white; /* Màu văn bản của button */
+}

@@ -10,6 +10,8 @@ import Students from "./page/StudentsPage";
 import TeamsPage from "./page/TeamsPage/Teams";
 import TeamPage from "./page/TeamsPage/Team";
 import Teams from "./component/Teams/Teams";
+import Team from "./component/Teams/Team";
+import Room from "./component/Teams/Team/video/room";
 
 function App() {
   return (
@@ -21,9 +23,12 @@ function App() {
             <Route path="students" element={<Students />} />
             <Route path="teams" element={<TeamsPage />}>
               <Route path="" element={<Teams />} />
-              <Route path=":id" element={<TeamPage />} />
+              <Route path=":id" element={<TeamPage />}>
+                <Route path="" element={<Team />} />
+              </Route>
             </Route>
           </Route>
+          <Route path="room/:roomId" element={<Room />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="*" element={<>Not Found</>} />
         </Route>
