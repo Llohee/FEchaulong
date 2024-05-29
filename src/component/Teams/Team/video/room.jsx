@@ -14,6 +14,7 @@ const Room = () => {
       const myMeeting = async (element) => {
         const appId = 20773281;
         const serverSecret = "eceff65cba623b3ea1641332668d5a96";
+
         try {
           const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
             appId,
@@ -33,16 +34,27 @@ const Room = () => {
               },
             ],
             scenario: {
-              mode: ZegoUIKitPrebuilt.GroupCall, 
+              mode: ZegoUIKitPrebuilt.GroupCall,
             },
             showScreenSharingButton: true,
+            screenSharingConfig: {
+              resolution: ZegoUIKitPrebuilt.ScreenSharingResolution_Auto,
+            },
+            videoResolutionList: [
+              ZegoUIKitPrebuilt.VideoResolution_360P,
+              ZegoUIKitPrebuilt.VideoResolution_180P,
+              ZegoUIKitPrebuilt.VideoResolution_480P,
+              ZegoUIKitPrebuilt.VideoResolution_720P,
+            ],
+            videoResolutionDefault: ZegoUIKitPrebuilt.VideoResolution_360P,
+            
           });
-
           const callRecord = {
             roomId: roomId,
             caller: userLogin.fullname,
             startTime: new Date().toISOString(),
           };
+          
           saveCallRecord(callRecord);
         } catch (error) {
           console.error("Error generating kit token or joining room:", error);
@@ -53,17 +65,18 @@ const Room = () => {
     }
   }, [userLogin, roomId]);
 
-  // Hàm để gửi record cuộc gọi lên Zego
   const saveCallRecord = async (callRecord) => {
     try {
-      // Gửi record lên API của Zego để lưu
-      const response = await fetch("wss://webliveroom20773281-api.coolzcloud.com/ws", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(callRecord),
-      });
+      const response = await fetch(
+        "wss://webliveroom20773281-api-bak.coolzcloud.com/ws",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(callRecord),
+        }
+      );
 
       if (response.ok) {
         console.log("Call record saved successfully:", callRecord);

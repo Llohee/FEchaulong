@@ -321,7 +321,7 @@ const Sidebar = () => {
         </svg>
         Lịch
       </button>
-      <button className="text-white">
+      <button className="text-white" onClick={() => navigate("/chats")}>
         <svg
           width="54px"
           height="54px"

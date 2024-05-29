@@ -12,6 +12,10 @@ import TeamPage from "./page/TeamsPage/Team";
 import Teams from "./component/Teams/Teams";
 import Team from "./component/Teams/Team";
 import Room from "./component/Teams/Team/video/room";
+import ChatPage from "./page/ChatPage";
+import Chat from "./component/Chat";
+import AssignmentPage from "./page/TeamsPage/Assignment";
+import Assigment from "./component/Teams/assigment/assigment";
 
 function App() {
   return (
@@ -23,9 +27,17 @@ function App() {
             <Route path="students" element={<Students />} />
             <Route path="teams" element={<TeamsPage />}>
               <Route path="" element={<Teams />} />
-              <Route path=":id" element={<TeamPage />}>
-                <Route path="" element={<Team />} />
+              <Route path="team" element={<TeamPage />}>
+                <Route path=":id" element={<Team />}>
+                  <Route path="" element={<Team />} />
+                  {/* <Route path="assignment">
+                    <Route path=":assignmentId" element={<Assigment />} />
+                  </Route> */}
+                </Route>
               </Route>
+            </Route>
+            <Route path="chats" element={<ChatPage />}>
+              <Route path="" element={<Chat />} />
             </Route>
           </Route>
           <Route path="room/:roomId" element={<Room />} />

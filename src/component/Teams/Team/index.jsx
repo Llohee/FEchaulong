@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
 import { Tab } from "@headlessui/react";
 import { useGetAllTeams } from "../../../api/teams-api";
 import TeamAvatar from "../../../ui/avatar/teamavatar";
 import Home from "./home";
 import NoteBook from "./notebook";
 import ClassWork from "./classwork";
-import Assignments from "./assignments";
+import Assignments from "../assigment";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import AddUser from "./modal/adduser";
@@ -24,7 +24,7 @@ const Team = () => {
     }
   }, [id]);
   const handleJoinRoom = useCallback(() => {
-    window.open(`/room/${id}`, "_blank");
+    window.open(`/room/${id}`);
   }, [id]);
 
   let [categories] = useState({
@@ -162,7 +162,7 @@ const Team = () => {
   return (
     <>
       <Tab.Group>
-        <div className="sub_container grid grid-cols-5 h-full">
+        <div className="sub_container grid grid-cols-5 h-screen overflow-hidden">
           <div className="py-4 px-2 col-span-1 flex flex-col gap-4">
             <div className="flex flex-col gap-8">
               <div className="px-4">
@@ -311,7 +311,7 @@ const Team = () => {
                   {posts.map((post) => (
                     <div key={post.id}>
                       <div className="h-16 shadow-violet-300 shadow-b shadow-sm px-8 py-4 !bg-violet-300/25 flex justify-between items-center">
-                        <div className="">{post.title}</div>
+                        <div className="text-2xl">{post.title}</div>
                         <button className="" onClick={handleJoinRoom}>
                           <svg
                             width="34px"

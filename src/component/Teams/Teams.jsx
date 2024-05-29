@@ -58,7 +58,7 @@ const AllTeam = () => {
   return (
     <div className="flex flex-wrap gap-14 p-8">
       {allTeams.map((team, index) => (
-        <Link to={`/teams/${team._id}`} key={index} className="block">
+        <Link to={`/teams/team/${team._id}`} key={index} className="block">
           <button
             style={{
               boxShadow:
