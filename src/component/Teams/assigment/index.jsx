@@ -19,15 +19,27 @@ const Assignments = () => {
     {
       title: "Đã hoàn thành",
       content: <Compeleted />,
-    }
+    },
   ];
   return (
     <div className="sub_chil_container text-black h-screen">
+      <div className="flex justify-between p-4 h-7">
+        <div className="">Bài tập</div>
+      </div>
+      <div className="h-[2px] bg-violet-300 rounded-3xl mx-4 my-6"></div>
       <Tab.Group>
-        <div className="flex justify-between m-2">
+        <div className="flex justify-between m-2 h-12">
           <Tab.List className="flex gap-8">
             {assigment.map(({ title }) => (
-              <Tab key={title} className="text-black" onFocus={null}>
+              <Tab
+                key={title}
+                className={({ selected }) =>
+                  selected
+                    ? "bg-violet-400 p-2 rounded-lg"
+                    : "p-2 hover:bg-violet-300 rounded-lg"
+                }
+                onFocus={null}
+              >
                 {title}
               </Tab>
             ))}

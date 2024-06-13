@@ -27,10 +27,6 @@ const Team = () => {
       getTeambyid(id);
     }
   }, [id]);
-  const handleJoinRoom = useCallback(() => {
-    window.open(`/room/${id}`);
-  }, [id]);
-  const location = useLocation();
   const categories = [
     {
       id: 1,
