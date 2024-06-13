@@ -2,7 +2,7 @@ import React from 'react'
 
 const Home = () => {
   return (
-    <div>Home page</div>
+    <div className="sub_chil_container text-black h-screen">Home page</div>
   )
 }
 

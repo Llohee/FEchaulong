@@ -2,7 +2,6 @@ import React, { useCallback, useEffect } from "react";
 import { useAssigment } from "../../../../api/assignment";
 import { useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
-import Assigment from "../assigment";
 
 const Passdue = () => {
   const { InactiveAssigments, inactiveAssigments } = useAssigment();
@@ -20,7 +19,7 @@ const Passdue = () => {
         <button
           key={act._id}
           className="bg-violet-300/50 p-4 shadow-lg rounded-lg hover:cursor-pointer"
-          onClick={() => navigate(`teams/${Teamid}/assignment/${act._id}`)}
+          onClick={() => navigate(`teams/${Teamid}/assignments/${act._id}`)}
         >
           <div className="text-2xl">
             {moment(act.start_time).format("dddd, DD-MM-YYYY hh:mm A")}

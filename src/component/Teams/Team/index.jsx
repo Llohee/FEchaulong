@@ -1,5 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
+import {
+  Link,
+  Outlet,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import { Tab } from "@headlessui/react";
 import { useGetAllTeams } from "../../../api/teams-api";
 import TeamAvatar from "../../../ui/avatar/teamavatar";
@@ -15,8 +21,6 @@ const Team = () => {
   const { id } = useParams();
   const { getTeambyid, teamById } = useGetAllTeams();
   const [showModalAddUser, setShowModalAddUser] = useState(false);
-  const [showLobbyScreen, setShowLobbyScreen] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (id) {
@@ -26,37 +30,33 @@ const Team = () => {
   const handleJoinRoom = useCallback(() => {
     window.open(`/room/${id}`);
   }, [id]);
-
-  let [categories] = useState({
-    "Trang chủ": [
-      {
-        id: 1,
-        title: "Trang chủ",
-        content: <Home />,
-      },
-    ],
-    "Ghi nhớ": [
-      {
-        id: 2,
-        title: "Ghi nhớ",
-        content: <NoteBook />,
-      },
-    ],
-    "Công việc": [
-      {
-        id: 3,
-        title: "Công việc",
-        content: <ClassWork />,
-      },
-    ],
-    "Bài tập": [
-      {
-        id: 4,
-        title: "Bài tập",
-        content: <Assignments />,
-      },
-    ],
-  });
+  const location = useLocation();
+  const categories = [
+    {
+      id: 1,
+      title: "Trang chủ",
+      content: <Home />,
+      path: `/teams/team/${id}/home`,
+    },
+    {
+      id: 2,
+      title: "Ghi nhớ",
+      content: <NoteBook />,
+      path: `/teams/team/${id}/notebook`,
+    },
+    {
+      id: 3,
+      title: "Công việc",
+      content: <ClassWork />,
+      path: `/teams/team/${id}/classwork`,
+    },
+    {
+      id: 4,
+      title: "Bài tập",
+      content: <Assignments />,
+      path: `/teams/team/${id}/assignments`,
+    },
+  ];
 
   const [listMenuItems] = useState([
     {
@@ -161,192 +161,156 @@ const Team = () => {
   ]);
   return (
     <>
-      <Tab.Group>
-        <div className="sub_container grid grid-cols-5 h-screen overflow-hidden">
-          <div className="py-4 px-2 col-span-1 flex flex-col gap-4">
-            <div className="flex flex-col gap-8">
-              <div className="px-4">
-                <Link to={`/teams/`}>
-                  <button className="flex gap-1 items-center bg-violet-300 duration-100 px-2 py-2 rounded-md hover:scale-110">
+      <div className="sub_container h-screen overflow-hidden shadow-r shadow-2xl fixed w-96 z-50 bg-violet-200">
+        <div className="py-4 px-2 col-span-1 flex flex-col gap-4">
+          <div className="flex flex-col gap-8">
+            <div className="px-4">
+              <Link to={`/teams/`}>
+                <button className="flex gap-1 items-center bg-violet-300 duration-100 px-2 py-2 rounded-md hover:scale-110">
+                  <svg
+                    width="20px"
+                    height="20px"
+                    viewBox="-0.5 0 25 25"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="text-black hover:text-white"
+                  >
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g
+                      id="SVGRepo_tracerCarrier"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="0.95"
+                    ></g>
+                    <g id="SVGRepo_iconCarrier">
+                      <path
+                        d="M20.0195 21.3199C22.5695 20.4399 23.0195 15.7199 23.0195 12.4099C23.0195 9.09992 22.5895 4.41001 20.0195 3.51001C17.3095 2.58001 9.01953 8.65991 9.01953 12.4099C9.01953 16.1599 17.3095 22.2499 20.0195 21.3199Z"
+                        stroke="#000000"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></path>{" "}
+                      <path
+                        d="M1 18.92C1 20.3008 2.11929 21.42 3.5 21.42C4.88071 21.42 6 20.3008 6 18.92L6 5.92004C6 4.53933 4.88071 3.42004 3.5 3.42004C2.11929 3.42004 1 4.53933 1 5.92004L1 18.92Z"
+                        stroke="#000000"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></path>{" "}
+                    </g>
+                  </svg>
+                  <p>Tất cả các lớp</p>
+                </button>
+              </Link>
+            </div>
+            <div className="">
+              <TeamAvatar name={teamById.name} size={"xl"} />
+              <div className="h-[3px] bg-violet-300 rounded-3xl mx-4 mt-6"></div>
+            </div>
+          </div>
+          <div classname="flex flex-col gap-2">
+            <div className="flex justify-between items-center pr-4">
+              <div className="text-2xl">{teamById.name}</div>
+              <Menu
+                as="div"
+                className="relative inline-block text-left items-center z-[8000]"
+              >
+                <div className="flex flex-row gap-4">
+                  <Menu.Button className="inline-flex w-full justify-center text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
                     <svg
-                      width="20px"
-                      height="20px"
-                      viewBox="-0.5 0 25 25"
+                      width="24px"
+                      height="24px"
+                      viewBox="0 0 24 24"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
-                      className="text-black hover:text-white"
+                      stroke="#000000"
                     >
                       <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                       <g
                         id="SVGRepo_tracerCarrier"
                         stroke-linecap="round"
                         stroke-linejoin="round"
-                        stroke-width="0.95"
                       ></g>
                       <g id="SVGRepo_iconCarrier">
                         <path
-                          d="M20.0195 21.3199C22.5695 20.4399 23.0195 15.7199 23.0195 12.4099C23.0195 9.09992 22.5895 4.41001 20.0195 3.51001C17.3095 2.58001 9.01953 8.65991 9.01953 12.4099C9.01953 16.1599 17.3095 22.2499 20.0195 21.3199Z"
-                          stroke="#000000"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        ></path>{" "}
+                          d="M7 12C7 13.1046 6.10457 14 5 14C3.89543 14 3 13.1046 3 12C3 10.8954 3.89543 10 5 10C6.10457 10 7 10.8954 7 12Z"
+                          fill="#000000"
+                        ></path>
                         <path
-                          d="M1 18.92C1 20.3008 2.11929 21.42 3.5 21.42C4.88071 21.42 6 20.3008 6 18.92L6 5.92004C6 4.53933 4.88071 3.42004 3.5 3.42004C2.11929 3.42004 1 4.53933 1 5.92004L1 18.92Z"
-                          stroke="#000000"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        ></path>{" "}
+                          d="M21 12C21 13.1046 20.1046 14 19 14C17.8954 14 17 13.1046 17 12C17 10.8954 17.8954 10 19 10C20.1046 10 21 10.8954 21 12Z"
+                          fill="#000000"
+                        ></path>
+                        <path
+                          opacity="0.5"
+                          d="M14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12Z"
+                          fill="#000000"
+                        ></path>
                       </g>
                     </svg>
-                    <p>Tất cả các lớp</p>
-                  </button>
-                </Link>
-              </div>
-              <div className="">
-                <TeamAvatar name={teamById.name} size={"xl"} />
-                <div className="h-[3px] bg-violet-300 rounded-3xl mx-4 mt-6"></div>
-              </div>
-            </div>
-            <div classname="flex flex-col gap-2">
-              <div className="flex justify-between items-center pr-4">
-                <div className="text-2xl">{teamById.name}</div>
-                <Menu
-                  as="div"
-                  className="relative inline-block text-left items-center z-[8000]"
+                  </Menu.Button>
+                </div>
+                <Transition
+                  as={Fragment}
+                  enter="transition ease-out duration-100"
+                  enterFrom="transform opacity-0 scale-95"
+                  enterTo="transform opacity-100 scale-100"
+                  leave="transition ease-in duration-75"
+                  leaveFrom="transform opacity-100 scale-100"
+                  leaveTo="transform opacity-0 scale-95"
                 >
-                  <div className="flex flex-row gap-4">
-                    <Menu.Button className="inline-flex w-full justify-center text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                      <svg
-                        width="24px"
-                        height="24px"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        stroke="#000000"
-                      >
-                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                        <g
-                          id="SVGRepo_tracerCarrier"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        ></g>
-                        <g id="SVGRepo_iconCarrier">
-                          <path
-                            d="M7 12C7 13.1046 6.10457 14 5 14C3.89543 14 3 13.1046 3 12C3 10.8954 3.89543 10 5 10C6.10457 10 7 10.8954 7 12Z"
-                            fill="#000000"
-                          ></path>
-                          <path
-                            d="M21 12C21 13.1046 20.1046 14 19 14C17.8954 14 17 13.1046 17 12C17 10.8954 17.8954 10 19 10C20.1046 10 21 10.8954 21 12Z"
-                            fill="#000000"
-                          ></path>
-                          <path
-                            opacity="0.5"
-                            d="M14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12Z"
-                            fill="#000000"
-                          ></path>
-                        </g>
-                      </svg>
-                    </Menu.Button>
-                  </div>
-                  <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
-                  >
-                    <Menu.Items className="bg-violet-200 rounded-md absolute flex flex-col gap-0 right-0 origin-top-right shadow-2xl focus:outline-none z-[8000]">
-                      {listMenuItems.map((val, index) => (
-                        <Menu.Item key={index}>
-                          <button
-                            onClick={() => val.onClick?.()}
-                            target="_parent"
-                            className="m-1 flex gap-1 hover:rounded-md px-3 py-2 hover:bg-violet-300/50 active:bg-grey-4 focus:bg-grey-4"
-                          >
-                            <div className="my-auto text-typography-title">
-                              {val.icon}
-                            </div>
+                  <Menu.Items className="bg-violet-200 rounded-md absolute flex flex-col gap-0 right-0 origin-top-right shadow-2xl focus:outline-none z-[8000]">
+                    {listMenuItems.map((val, index) => (
+                      <Menu.Item key={index}>
+                        <button
+                          onClick={() => val.onClick?.()}
+                          target="_parent"
+                          className="m-1 flex gap-1 hover:rounded-md px-3 py-2 hover:bg-violet-300/50 active:bg-grey-4 focus:bg-grey-4"
+                        >
+                          <div className="my-auto text-typography-title">
+                            {val.icon}
+                          </div>
 
-                            <div className="flex flex-col text-sm whitespace-nowrap">
-                              {val.title}
-                            </div>
-                          </button>
-                        </Menu.Item>
-                      ))}
-                    </Menu.Items>
-                  </Transition>
-                </Menu>
-              </div>
-              <div className="mt-4">
-                <Tab.List
-                  className="flex flex-col gap-2 px-4 ml-2"
-                  onFocus={null}
-                >
-                  {Object.keys(categories).map((category) => (
-                    <Tab
-                      onFocus={null}
-                      key={category}
-                      className={({ selected }) =>
-                        selected
-                          ? "text-black text-md bg-violet-300/75 rounded-md text-left px-4 py-2"
-                          : "text-black text-md text-left px-4 py-2 hover:bg-violet-300/50 rounded-md"
-                      }
-                    >
-                      {category}
-                    </Tab>
-                  ))}
-                </Tab.List>
-              </div>
-              <div className="h-[3px] bg-violet-300 rounded-3xl mx-4 mt-6"></div>
-            </div>
-          </div>
-          <div className="col-span-4 shadow-2xl shadow-violet-400 shadow-l border-white/50">
-            <Tab.Panels className="">
-              {Object.values(categories).map((posts, idx) => (
-                <Tab.Panel key={idx} className="">
-                  {posts.map((post) => (
-                    <div key={post.id}>
-                      <div className="h-16 shadow-violet-300 shadow-b shadow-sm px-8 py-4 !bg-violet-300/25 flex justify-between items-center">
-                        <div className="text-2xl">{post.title}</div>
-                        <button className="" onClick={handleJoinRoom}>
-                          <svg
-                            width="34px"
-                            height="34px"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                            <g
-                              id="SVGRepo_tracerCarrier"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            ></g>
-                            <g id="SVGRepo_iconCarrier">
-                              <path
-                                d="M16 10L18.5768 8.45392C19.3699 7.97803 19.7665 7.74009 20.0928 7.77051C20.3773 7.79703 20.6369 7.944 20.806 8.17433C21 8.43848 21 8.90095 21 9.8259V14.1741C21 15.099 21 15.5615 20.806 15.8257C20.6369 16.056 20.3773 16.203 20.0928 16.2295C19.7665 16.2599 19.3699 16.022 18.5768 15.5461L16 14M6.2 18H12.8C13.9201 18 14.4802 18 14.908 17.782C15.2843 17.5903 15.5903 17.2843 15.782 16.908C16 16.4802 16 15.9201 16 14.8V9.2C16 8.0799 16 7.51984 15.782 7.09202C15.5903 6.71569 15.2843 6.40973 14.908 6.21799C14.4802 6 13.9201 6 12.8 6H6.2C5.0799 6 4.51984 6 4.09202 6.21799C3.71569 6.40973 3.40973 6.71569 3.21799 7.09202C3 7.51984 3 8.07989 3 9.2V14.8C3 15.9201 3 16.4802 3.21799 16.908C3.40973 17.2843 3.71569 17.5903 4.09202 17.782C4.51984 18 5.07989 18 6.2 18Z"
-                                stroke="#000000"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                              ></path>
-                            </g>
-                          </svg>
+                          <div className="flex flex-col text-sm whitespace-nowrap">
+                            {val.title}
+                          </div>
                         </button>
-                      </div>
-                      <div className="p-4">{post.content}</div>
-                    </div>
-                  ))}
-                </Tab.Panel>
-              ))}
-            </Tab.Panels>
+                      </Menu.Item>
+                    ))}
+                  </Menu.Items>
+                </Transition>
+              </Menu>
+            </div>
+            <Tab.Group>
+              <Tab.List className="flex flex-col gap-2 px-4 ml-2 mt-4">
+                {categories.map((category) => (
+                  <Tab
+                    key={category.id}
+                    as={Link}
+                    to={category.path}
+                    className={({ selected }) =>
+                      `menu-item text-black text-md ${
+                        selected
+                          ? "bg-violet-300/75 rounded-md text-left px-4 py-2"
+                          : "text-left px-4 py-2 hover:bg-violet-300/50 rounded-md"
+                      }`
+                    }
+                  >
+                    {category.title}
+                  </Tab>
+                ))}
+              </Tab.List>
+              <div className="h-[3px] bg-violet-300 rounded-3xl mx-4 mt-6"></div>
+              <Tab.Panels className="">
+                {categories.map((category) => (
+                  <Tab.Panel key={category.id}>
+                    <Outlet />
+                  </Tab.Panel>
+                ))}
+              </Tab.Panels>
+            </Tab.Group>
           </div>
         </div>
-      </Tab.Group>
+      </div>
       {showModalAddUser && (
         <AddUser
           isOpen={showModalAddUser}

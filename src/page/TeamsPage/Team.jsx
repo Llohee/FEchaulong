@@ -14,10 +14,10 @@ const TeamPage = () => {
   }, [id]);
 
   return (
-    <>
-      {/* <Team /> */}
+    <div className="relative">
+      <Team />
       <Outlet />
-    </>
+    </div>
   );
 };
 

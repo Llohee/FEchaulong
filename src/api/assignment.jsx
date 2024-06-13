@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { message } from "antd";
 
 export const useAssigment = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [activeAssigments, setActiveAssigments] = useState([]);
   const [inactiveAssigments, setInactiveAssigments] = useState([]);
   const [getAssignmentById, setGetAssignmentById] = useState([]);
+
   const ActiveAssigments = async (Teamid) => {
     try {
       const url = `${process.env.REACT_APP_PUBLIC_BACK_END_DOMAIN}/teams/${Teamid}/active-homeworks`;
@@ -19,6 +21,7 @@ export const useAssigment = () => {
       setErrorMessage(error.response.data.message);
     }
   };
+
   const InactiveAssigments = async (Teamid) => {
     try {
       const url = `${process.env.REACT_APP_PUBLIC_BACK_END_DOMAIN}/teams/${Teamid}/inactive-homeworks`;
@@ -27,12 +30,13 @@ export const useAssigment = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      setInactiveAssigments(data.inactiveHomeworks);
+      setInactiveAssigments(data);
     } catch (error) {
       setErrorMessage(error.response.data.message);
     }
   };
-  const getTeambyid = async (Teamid, id) => {
+
+  const getbyid = async (Teamid, id) => {
     try {
       const url = `${process.env.REACT_APP_PUBLIC_BACK_END_DOMAIN}/teams/${Teamid}/homework/${id}`;
       const { data } = await axios.get(url, {
@@ -45,18 +49,39 @@ export const useAssigment = () => {
       console.log(error);
     }
   };
-  const onSubmitAssigment = async (Teamid, id, values) => {
+
+  const onSubmitAssigment = async (
+    Teamid,
+    id,
+    values,
+    file,
+    setSubmitting,
+    setUserSubmitted
+  ) => {
+    const formData = new FormData();
+    formData.append("description", values.description);
+    formData.append("image", file);
+
+    setSubmitting(true);
+
     try {
       const url = `${process.env.REACT_APP_PUBLIC_BACK_END_DOMAIN}/teams/${Teamid}/${id}/submit`;
-      await axios.post(url, values, {
+      const response = await axios.post(url, formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "multipart/form-data",
         },
       });
+      message.success(response.data.message);
+      setUserSubmitted(true); 
     } catch (error) {
-      setErrorMessage(error.response.data.message);
+      console.error("Error submitting homework:", error);
+      message.error(error.response.data.error || "Error submitting homework");
+    } finally {
+      setSubmitting(false);
     }
   };
+
   const deleteAssignment = async (Teamid, id, submitid) => {
     try {
       const url = `${process.env.REACT_APP_PUBLIC_BACK_END_DOMAIN}/teams/${Teamid}/${id}/delete-submission/${submitid}`;
@@ -65,18 +90,20 @@ export const useAssigment = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      console.log(response);
+      message.success(response.data.message);
     } catch (error) {
       console.log(error);
     }
   };
+
   const onFinishFailed = (errorInfo) => {
     console.log(errorInfo);
   };
+
   return {
     ActiveAssigments,
     InactiveAssigments,
-    getTeambyid,
+    getbyid,
     onFinishFailed,
     onSubmitAssigment,
     deleteAssignment,
