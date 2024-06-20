@@ -12,7 +12,7 @@ export function Modal(props) {
       >
         <Dialog
           as="div"
-          className="relative z-[2000]"
+          className="relative z-[500]"
           onClose={props.closeModal}
         >
           <Transition.Child

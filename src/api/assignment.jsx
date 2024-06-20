@@ -73,7 +73,7 @@ export const useAssigment = () => {
         },
       });
       message.success(response.data.message);
-      setUserSubmitted(true); 
+      setUserSubmitted(true);
     } catch (error) {
       console.error("Error submitting homework:", error);
       message.error(error.response.data.error || "Error submitting homework");
@@ -99,7 +99,28 @@ export const useAssigment = () => {
   const onFinishFailed = (errorInfo) => {
     console.log(errorInfo);
   };
+  const createAssignment = async (Teamid, values, file) => {
+    const formData = new FormData();
+    formData.append("name", values.name);
+    formData.append("description", values.description);
+    formData.append("start_time", values.start_time);
+    formData.append("end_time", values.end_time);
+    formData.append("image", file);
 
+    try {
+      const url = `${process.env.REACT_APP_PUBLIC_BACK_END_DOMAIN}/teams/${Teamid}/add-homework`;
+      const response = await axios.post(url, formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      message.success(response.data.message);
+    } catch (error) {
+      console.error("Error submitting homework:", error);
+      message.error(error.response.data.error || "Error submitting homework");
+    }
+  };
   return {
     ActiveAssigments,
     InactiveAssigments,
@@ -107,6 +128,7 @@ export const useAssigment = () => {
     onFinishFailed,
     onSubmitAssigment,
     deleteAssignment,
+    createAssignment,
     getAssignmentById,
     errorMessage,
     activeAssigments,

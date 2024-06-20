@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useAssigment } from "../../../api/assignment";
 import moment from "moment";
 import { Button, Form, Upload, message } from "antd";
@@ -90,13 +90,52 @@ const Assignment = () => {
     <div className="sub_chil_container">
       <Form form={form} onFinish={handleSubmit}>
         <Form.Item>
-          {userSubmitted ? (
-            <Button onClick={handledeleteSubmit}>Hoàn tác nộp bài</Button>
-          ) : (
-            <Button type="primary" htmlType="submit" loading={submitting}>
-              Nộp bài
-            </Button>
-          )}
+          <div className="flex justify-between mx-auto py-4">
+            <Link to={`/teams/team/${id}/assignments`}>
+              <button className="flex gap-1 items-center bg-violet-300 duration-100 px-2 py-2 rounded-md text-black">
+                <svg
+                  width="20px"
+                  height="20px"
+                  viewBox="-0.5 0 25 25"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="text-black hover:text-white"
+                >
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="0.95"
+                  ></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <path
+                      d="M20.0195 21.3199C22.5695 20.4399 23.0195 15.7199 23.0195 12.4099C23.0195 9.09992 22.5895 4.41001 20.0195 3.51001C17.3095 2.58001 9.01953 8.65991 9.01953 12.4099C9.01953 16.1599 17.3095 22.2499 20.0195 21.3199Z"
+                      stroke="#000000"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>{" "}
+                    <path
+                      d="M1 18.92C1 20.3008 2.11929 21.42 3.5 21.42C4.88071 21.42 6 20.3008 6 18.92L6 5.92004C6 4.53933 4.88071 3.42004 3.5 3.42004C2.11929 3.42004 1 4.53933 1 5.92004L1 18.92Z"
+                      stroke="#000000"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>{" "}
+                  </g>
+                </svg>
+                <p>Tất cả các lớp</p>
+              </button>
+            </Link>
+            {userSubmitted ? (
+              <Button onClick={handledeleteSubmit}>Hoàn tác nộp bài</Button>
+            ) : (
+              <Button  htmlType="submit" loading={submitting} className="bg-violet-300 hover:bg-violet-300 text-black">
+                Nộp bài
+              </Button>
+            )}
+          </div>
         </Form.Item>
         <div className="text-xl">{getAssignmentById.name}</div>
         <div className="flex">
@@ -108,18 +147,14 @@ const Assignment = () => {
         <div className="text-xl">{getAssignmentById.image}</div>
         <div className="">
           <div className="">Bài tập của tôi</div>
-          <Form.Item
-            name="description"
-            label="Description"
-            rules={[{ required: true, message: "Please enter a description" }]}
-          >
+          <Form.Item name="description" label="Ghi chú bài tập">
             <TextArea rows={4} disabled={userSubmitted} />
           </Form.Item>
           <Form.Item
             name="image"
-            label="Image"
+            label="Tải ảnh"
             valuePropName="file"
-            rules={[{ required: true, message: "Please upload an image" }]}
+            rules={[{ message: "Please upload an image" }]}
           >
             <Upload
               beforeUpload={() => false}
