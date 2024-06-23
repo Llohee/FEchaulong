@@ -17,8 +17,6 @@ const Createstudent = ({ isOpen, closeModal }) => {
       // size="large"
     >
       <UserCreateForm
-        // form={formCreate}
-        // register={register}
         closeModal={() => {
           closeModal();
         }}

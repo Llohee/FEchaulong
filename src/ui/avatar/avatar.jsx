@@ -11,7 +11,7 @@ const avatarStyles = cva(
         xs: "size-6 aspect-square text-[11px]",
         small: "size-9",
         medium: "size-14 text-heading-5",
-        large: "size-36 text-[100px] font-bold",
+        large: "size-28 text-[70px] font-bold",
       },
       noName: {
         true: "!bg-none !bg-brand-background animate-[pulse_10s_cubic-bezier(0.4,0,0.6,1)_infinite]",

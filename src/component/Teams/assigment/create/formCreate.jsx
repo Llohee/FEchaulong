@@ -7,10 +7,8 @@ import { useParams } from "react-router-dom";
 
 const AssignmentCreateForm = ({ closeModal }) => {
   const [file, setFile] = useState(null);
-
   const { createAssignment } = useAssigment();
   const Teamid  = useParams();
-  console.log(Teamid.id)
   const handleFileChange = ({ file }) => {
     setFile(file);
   };
@@ -83,7 +81,6 @@ const AssignmentCreateForm = ({ closeModal }) => {
           <Upload
             beforeUpload={() => false}
             onChange={handleFileChange}
-            maxCount={1}
           >
             <Button icon={<UploadOutlined />}>Chọn ảnh</Button>
           </Upload>

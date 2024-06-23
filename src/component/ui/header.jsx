@@ -112,13 +112,13 @@ const Header = () => {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="border border-grey-4 p-2 rounded-md absolute flex flex-col gap-0 right-0 mt-2 w-60 origin-top-right divide-y-[1px] divide-grey-3 bg-grey-1 shadow-lg focus:outline-none z-[8000]">
+            <Menu.Items className="bg-violet-200 border border-grey-4 p-2 rounded-md absolute flex flex-col gap-0 right-0 mt-2 w-60 origin-top-right divide-y-[1px] divide-grey-3 bg-grey-1 shadow-lg focus:outline-none z-[8000]">
               {listMenuItems.map((val, index) => (
                 <Menu.Item key={index}>
                   {val.link ? (
                     <Link
                       onClick={() => val.onClick?.()}
-                      href={val.link ?? "#"}
+                      to={val.link}
                       target="_parent"
                       className="flex gap-2 hover:rounded-md px-3 py-2 hover:bg-grey-3 active:bg-grey-4 focus:bg-grey-4"
                     >

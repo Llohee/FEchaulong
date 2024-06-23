@@ -25,7 +25,7 @@ const Assignments = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
-      <div className="sub_chil_container text-black h-screen">
+      <div className="sub_chil_container text-black">
         <div className="flex justify-between p-4 h-7">
           <div className="">Bài tập</div>
         </div>
@@ -60,7 +60,7 @@ const Assignments = () => {
               <></>
             )}
           </div>
-          <Tab.Panels>
+          <Tab.Panels className="mt-6">
             {assigment.map(({ title, content }) => (
               <Tab.Panel key={title}>{content}</Tab.Panel>
             ))}

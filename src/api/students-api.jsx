@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { message } from "antd";
 
 export const useGetAllStudent = () => {
   const [getAllStudent, setGetAllStudent] = useState([]);
@@ -21,7 +22,7 @@ export const useGetAllStudent = () => {
     Students();
   }, []);
 
-  const updateStudent = async (id, updatedData) => {
+  const updateStudent = async (id, updatedData, setSubmitting) => {
     try {
       const url = `${process.env.REACT_APP_PUBLIC_BACK_END_DOMAIN}/users/${id}`;
       const response = await axios.put(url, updatedData, {
@@ -29,10 +30,10 @@ export const useGetAllStudent = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      console.log(response);
+      message.success(response.data.message);
     } catch (error) {
-      console.log(error);
-    }
+      message.error(error.response.data.error);
+    } 
   };
 
   const deleteStudent = async (id) => {

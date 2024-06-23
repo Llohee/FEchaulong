@@ -157,7 +157,7 @@ const Team = () => {
   ]);
   return (
     <>
-      <div className="sub_container h-screen overflow-hidden shadow-r shadow-2xl fixed w-96 z-50 bg-violet-200">
+      <div className="sub_container overflow-hidden shadow-r shadow-2xl fixed w-96 z-50 bg-violet-200 min-h-screen">
         <div className="py-4 px-2 col-span-1 flex flex-col gap-4">
           <div className="flex flex-col gap-8">
             <div className="px-4">

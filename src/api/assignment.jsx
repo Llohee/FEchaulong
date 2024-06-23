@@ -30,7 +30,7 @@ export const useAssigment = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      setInactiveAssigments(data);
+      setInactiveAssigments(data.inactiveHomeworks);
     } catch (error) {
       setErrorMessage(error.response.data.message);
     }
@@ -121,10 +121,25 @@ export const useAssigment = () => {
       message.error(error.response.data.error || "Error submitting homework");
     }
   };
+  const updateSubmission = async (Teamid, homeworkId, submissionId, values) => {
+    try {
+      const url = `${process.env.REACT_APP_PUBLIC_BACK_END_DOMAIN}/teams/${Teamid}/${homeworkId}/update-submission/${submissionId}`;
+      const response = await axios.put(url, values, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      message.success(response.data.message);
+    } catch (error) {
+      console.error("Error updating submission score and comment:", error);
+      message.error(error.response.data.error || "Error updating submission");
+    }
+  };
   return {
     ActiveAssigments,
     InactiveAssigments,
     getbyid,
+    updateSubmission,
     onFinishFailed,
     onSubmitAssigment,
     deleteAssignment,

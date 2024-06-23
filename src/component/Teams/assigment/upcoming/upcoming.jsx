@@ -13,12 +13,12 @@ const Upcoming = () => {
   const navigate = useNavigate();
   return (
     <>
-      <div className="flex flex-wrap-2 gap-5">
+      <div className="flex flex-wrap gap-5">
         {activeAssigments.map((act) => (
           <button
             onClick={() => navigate(`/teams/team/${id}/assignments/${act._id}`)}
             key={act._id}
-            className="bg-violet-300/50 p-4 shadow-lg rounded-lg"
+            className="bg-violet-300/50 p-4 shadow-lg rounded-lg min-w-[500px]"
           >
             <div className="text-2xl">
               {moment(act.start_time).format("dddd, DD-MM-YYYY hh:mm A")}

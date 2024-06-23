@@ -19,6 +19,8 @@ import ClassWork from "./component/Teams/Team/classwork";
 import AssignmentPage from "./page/TeamsPage/Assignment";
 import Assignments from "./component/Teams/assigment";
 import Assignment from "./component/Teams/assigment/assignment";
+import Profile from "./component/user/profile";
+import ProfilePage from "./page/ProfilePage";
 // import Assignments from "./component/Teams/assigment";
 
 function App() {
@@ -32,7 +34,7 @@ function App() {
             <Route path="teams" element={<TeamsPage />}>
               <Route path="" element={<Teams />} />
               <Route path="team/:id" element={<TeamPage />}>
-                <Route path="home" element={<Home />} />
+                <Route path="" element={<Home />} />
                 <Route path="notebook" element={<NoteBook />} />
                 <Route path="classwork" element={<ClassWork />} />
                  <Route path="assignments" element={<AssignmentPage />}>
@@ -43,6 +45,9 @@ function App() {
             </Route>
             <Route path="chats" element={<ChatPage />}>
               <Route path="" element={<Chat />} />
+            </Route>
+            <Route path="profile" element={<ProfilePage />}>
+              <Route path="" element={<Profile />} />
             </Route>
           </Route>
           <Route path="room/:roomId" element={<Room />} />
