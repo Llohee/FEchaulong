@@ -1,7 +1,7 @@
 import React from "react";
 import Loginsvg_6 from "../../../images/Loginsvg_6.svg";
 import Loginsvg_7 from "../../../images/Loginsvg_7.svg";
-import { Row, Col, Form } from "antd";
+import { Row, Col, Form, Input } from "antd";
 import { useLoginForm } from "../../../api/login-api";
 import { emailRegex, passwordRegex } from "../../../hooks/regex";
 
@@ -24,8 +24,7 @@ const LoginStudentForm = () => {
             },
             {
               pattern: emailRegex,
-              message:
-                "Sai định dạng Email",
+              message: "Sai định dạng Email",
             },
           ]}
           className="py-6 px-3 rounded border border-white"
@@ -35,13 +34,13 @@ const LoginStudentForm = () => {
               <img src={Loginsvg_6} alt="" className="" />
             </Col>
             <Col>
-              <input
+              <Input
                 name="email"
                 placeholder="Email"
                 type="text"
                 onFocus={null}
-                className="text-lg h-8 bg-inherit focus:outline-none w-80  text-white"
-              ></input>
+                className="text-lg h-8 bg-inherit hover:bg-inherit focus:bg-inherit focus:border-none w-80  placeholder:text-white border-none"
+              />
             </Col>
           </Row>
         </Form.Item>
@@ -55,7 +54,7 @@ const LoginStudentForm = () => {
             {
               pattern: passwordRegex,
               message:
-                "Ít nhất 9 kí tự bao gồm chữ hoa, chữ thường, số và kí tự đặc biệt",
+                "Ít nhất 9 kí tự bao gồm chữ hoa, chữ thường, số, kí tự đặc biệt",
             },
           ]}
           className="py-6 px-3 rounded border border-white"
@@ -65,13 +64,15 @@ const LoginStudentForm = () => {
               <img src={Loginsvg_7} alt="" className="" />
             </Col>
             <Col>
-              <input
+              <Input
                 name="password"
                 placeholder="Mật khẩu"
                 type="password"
+                autoComplete="null"
+                autoFocus={null}
                 onFocus={null}
-                className="text-lg w-80 h-8 bg-inherit focus:outline-none text-white "
-              ></input>
+                className="text-lg h-8 !bg-inherit hover:bg-inherit focus:bg-inherit focus:border-none w-80  placeholder:text-white border-none"
+              />
             </Col>
           </Row>
         </Form.Item>

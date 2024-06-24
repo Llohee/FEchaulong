@@ -31,20 +31,21 @@ export const useLoginForm = () => {
 
   const [userRole, setUserRole] = useState("");
   useEffect(() => {
-    const fetchUserRole = async () => {
-      try {
-        const url = `${process.env.REACT_APP_PUBLIC_BACK_END_DOMAIN}/users/role`;
-        const response = await axios.get(url, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-        setUserRole(response.data.role);
-      } catch (error) {
-        console.error("Error fetching user role:", error);
-      }
-    };
-    fetchUserRole();
+      const fetchUserRole = async () => {
+        try {
+          const url = `${process.env.REACT_APP_PUBLIC_BACK_END_DOMAIN}/users/role`;
+          const response = await axios.get(url, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          });
+          setUserRole(response.data.role);
+        } catch (error) {
+          console.error("Error fetching user role:", error);
+        }
+      };
+      fetchUserRole();
+    
   }, []);
   const [userLogin, setUserLogin] = useState({});
   useEffect(() => {

@@ -111,7 +111,13 @@ const StuTable = () => {
 
   return (
     <>
-      <Table dataSource={getAllStudent} columns={columns} key={isReset} />
+      <Table
+        pagination={{ pageSize: 5 }}
+        className="custom-table"
+        dataSource={getAllStudent}
+        columns={columns}
+        key={isReset}
+      />
       {isShowModalUpdate && studentchoose && (
         <UpdateStudent
           isOpen={isShowModalUpdate}

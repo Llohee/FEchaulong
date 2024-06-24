@@ -344,5 +344,45 @@ a {
 .sub_chil_container {
   padding-top: 60px;
   padding-left: 430px;
-  margin-right:40px
+  margin-right: 40px;
+}
+/* customTableStyles.css */
+.ant-table-tbody{
+  max-height:500px !important
+}
+.custom-table .ant-table-thead > tr > th {
+  background-color: #475569;
+  color: #60a5fa;
+}
+.custom-table .ant-pagination-item {
+  color: #ffff; /* Màu của số trang */
+}
+.custom-table .ant-pagination-item-link {
+  color: #fff; /* Màu của số trang khi hover */
+}
+.ant-pagination-item-active .ant-pagination-item-link {
+  color: #fff; /* Màu của số trang khi đang được chọn */
+  background-color: #1890ff; /* Màu nền của số trang khi đang được chọn */
+}
+.ant-pagination-prev, .ant-pagination-next {
+  color: #1890ff; /* Màu của icon previous và next */
+}
+
+.ant-pagination-prev:hover, .ant-pagination-next:hover {
+  color: #1890ff; /* Màu của icon previous và next khi hover */
+}
+
+.ant-pagination-prev-icon, .ant-pagination-next-icon {
+  color: #1890ff; /* Màu của icon previous và next */
+}
+.custom-table .ant-table-tbody > tr > td {
+  background-color: rgb(148 163 184 / var(--tw-bg-opacity));
+  height:100px;
+  color:white
+}
+.custom-table .ant-table-tbody > tr:hover > td {
+  color:black
+}
+.custom-table .ant-table-tbody{
+  height:100px
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useAssigment } from "../../../api/assignment";
 import moment from "moment";
-import { Button, Form, Upload, message } from "antd";
+import { Button, Col, Form, Row, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import TextArea from "antd/es/input/TextArea";
 import { useLoginForm } from "../../../api/login-api";
@@ -27,19 +27,18 @@ const Assignment = () => {
     },
   ];
   return (
-    <div className="sub_chil_container">
+    <div className="sub_chil_container max-h-screen">
       <Tab.Group>
         <div className="flex justify-between h-12 mt-4">
           <Tab.List className="flex gap-8">
             <Link to={`/teams/team/${id}/assignments`} className="">
-              <button className="flex gap-1 items-center bg-violet-300 duration-100 px-2 py-2 rounded-md text-black">
+              <button className="flex gap-1 items-center bg-slate-600 duration-100 px-2 py-2 rounded-md text-white hover:scale-x-110">
                 <svg
                   width="20px"
                   height="20px"
                   viewBox="-0.5 0 25 25"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className="text-black hover:text-white"
                 >
                   <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                   <g
@@ -51,14 +50,14 @@ const Assignment = () => {
                   <g id="SVGRepo_iconCarrier">
                     <path
                       d="M20.0195 21.3199C22.5695 20.4399 23.0195 15.7199 23.0195 12.4099C23.0195 9.09992 22.5895 4.41001 20.0195 3.51001C17.3095 2.58001 9.01953 8.65991 9.01953 12.4099C9.01953 16.1599 17.3095 22.2499 20.0195 21.3199Z"
-                      stroke="#000000"
+                      stroke="#ffff"
                       stroke-width="1.5"
                       stroke-linecap="round"
                       stroke-linejoin="round"
                     ></path>{" "}
                     <path
                       d="M1 18.92C1 20.3008 2.11929 21.42 3.5 21.42C4.88071 21.42 6 20.3008 6 18.92L6 5.92004C6 4.53933 4.88071 3.42004 3.5 3.42004C2.11929 3.42004 1 4.53933 1 5.92004L1 18.92Z"
-                      stroke="#000000"
+                      stroke="#ffff"
                       stroke-width="1.5"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -73,8 +72,8 @@ const Assignment = () => {
                 key={title}
                 className={({ selected }) =>
                   selected
-                    ? "bg-violet-400 p-2 rounded-lg"
-                    : "p-2 hover:bg-violet-300 rounded-lg"
+                    ? "bg-slate-400 p-2 rounded-lg text-white min-w-[150px]"
+                    : "p-2 hover:bg-slate-400 rounded-lg text-white min-w-[150px]"
                 }
                 onFocus={null}
               >
@@ -108,19 +107,23 @@ const AssignmentContent = () => {
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-col gap-2">
-        <div className="text-2xl">Tên: {getAssignmentById.name}</div>
-        <div className="flex text-red-500">
+        <div className="text-2xl text-white">Tên: {getAssignmentById.name}</div>
+        <div className="flex text-red-300">
           <p className="pr-2">Hết hạn:</p>
           {moment(getAssignmentById.end_time).format(
             "dddd, DD-MM-YYYY hh:mm A"
           )}
         </div>
-        <img
-          src={getBase64ImageSrc(getAssignmentById.image)}
-          alt="Ảnh"
-          style={{ maxWidth: "50%" }}
-        />
-        <div className="text-lg">Mô tả: {getAssignmentById.description}</div>
+        {getAssignmentById.image && (
+          <img
+            src={getBase64ImageSrc(getAssignmentById.image)}
+            alt="Ảnh"
+            style={{ maxWidth: "50%" }}
+          />
+        )}
+        <div className="text-lg text-white">
+          Mô tả: {getAssignmentById.description}
+        </div>
       </div>
       <FormAssignment />
     </div>
@@ -174,7 +177,7 @@ const FormAssignment = () => {
       setDeleted(true);
       setUserSubmitted(false);
       form.resetFields();
-      setSubmit(false); // Đặt lại state submit
+      setSubmit(false);
     });
   };
 
@@ -214,7 +217,7 @@ const FormAssignment = () => {
       >
         <Form.Item className="">
           <div className="flex justify-between w-full px-6">
-            <p className="text-xl">Bài tập của tôi </p>
+            <p className="text-xl text-white">Bài tập của tôi </p>
             {userSubmitted ? (
               <Button onClick={handledeleteSubmit}>Hoàn tác nộp bài</Button>
             ) : (
@@ -228,24 +231,34 @@ const FormAssignment = () => {
             )}
           </div>
         </Form.Item>
-        <Form.Item name="description" label="Ghi chú bài tập">
-          <TextArea rows={4} disabled={userSubmitted} />
-        </Form.Item>
-        <Form.Item
-          name="image"
-          label="Tải ảnh"
-          valuePropName="file"
-        >
-          <Upload
-            beforeUpload={() => false}
-            onChange={handleFileChange}
-            disabled={userSubmitted}
-          >
-            <Button icon={<UploadOutlined />} disabled={userSubmitted}>
-              Select Image
-            </Button>
-          </Upload>
-        </Form.Item>
+        <Col className="flex flex-col gap-2">
+          <Row className="text-white"> Ghi chú bài tập</Row>
+          <Form.Item name="description">
+            <TextArea
+              rows={4}
+              disabled={userSubmitted}
+              className="text-white"
+            />
+          </Form.Item>
+        </Col>
+        <Col className="flex flex-col gap-2">
+          <Row className="text-white"> Tải ảnh</Row>
+          <Form.Item name="image" valuePropName="file">
+            <Upload
+              beforeUpload={() => false}
+              onChange={handleFileChange}
+              disabled={userSubmitted}
+            >
+              <Button
+                icon={<UploadOutlined />}
+                disabled={userSubmitted}
+                className="text-white"
+              >
+                Select Image
+              </Button>
+            </Upload>
+          </Form.Item>
+        </Col>
       </Form>
     </div>
   );

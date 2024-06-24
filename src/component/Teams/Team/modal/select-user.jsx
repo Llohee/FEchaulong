@@ -12,15 +12,16 @@ import {
 import { useGetAllTeams } from "../../../../api/teams-api";
 import { useParams } from "react-router-dom";
 import ConfirmAddUser from "./confirm-add-user";
-
+import { ActionLoading } from "../../../../ui/Loading/loading";
+import { Button } from "antd";
 const SeclectUser = ({ closeModal }) => {
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState([]);
   const { getAllStudent } = useGetAllStudent();
   const { errorMessage } = useGetAllTeams();
-  console.log(errorMessage);
-  const [isShowModalConfirm, setIsShowModalConfirm] = useState(false);
 
+  const [isShowModalConfirm, setIsShowModalConfirm] = useState(false);
+  const { loading } = useGetAllTeams();
   const filteredUsers =
     search === ""
       ? getAllStudent
@@ -82,21 +83,22 @@ const SeclectUser = ({ closeModal }) => {
           )}
         </Combobox>
       </div>
-      <div className="flex justify-between -ml-2 px-6 py-4 shadow-2xl shadow-top bg-violet-100 fixed bottom-0 w-full">
+      <div className="flex justify-between -ml-2 px-6 py-4 shadow-2xl shadow-top bg-slate-200 fixed bottom-0 w-full z-50">
         {/* {errorMessage && (
         <div className="text-red-500 text-end px-4">{errorMessage}</div>
       )}  */}
-        <button onClick={closeModal} className="">
+        <Button onClick={closeModal} className="">
           Hủy
-        </button>
-        <button
+        </Button>
+        <Button
+          loading={loading}
           onClick={() => {
             setIsShowModalConfirm(true);
           }}
-          className=""
+          className="flex gap-1"
         >
-          Thêm
-        </button>
+          <p>Thêm</p>
+        </Button>
       </div>
       <ConfirmAddUser
         isOpen={isShowModalConfirm}
@@ -104,6 +106,7 @@ const SeclectUser = ({ closeModal }) => {
           // closeModal();
           setIsShowModalConfirm(false);
         }}
+        closeModalSelect={closeModal}
         selected={selected}
       />
     </div>

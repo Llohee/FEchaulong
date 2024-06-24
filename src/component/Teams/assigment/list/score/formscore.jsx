@@ -9,7 +9,7 @@ const Formscore = ({ closeModal, studentchoose, isReset }) => {
   const [form] = Form.useForm();
   const { user, submission } = studentchoose;
   const { id, assignmentId } = useParams();
-  const { updateSubmission } = useAssigment();
+  const { updateSubmission, loading } = useAssigment();
   const [editableScore, setEditableScore] = useState(false);
   const [editableComment, setEditableComment] = useState(false);
 
@@ -46,7 +46,7 @@ const Formscore = ({ closeModal, studentchoose, isReset }) => {
   return (
     <>
       <Form form={form} onFinish={handleSubmit}>
-        <Row className="flex flex-col gap-6 px-4 py-6">
+        <Row className="flex flex-col px-4 pt-6 gap-2 pb-12 overflow-auto">
           <Row className="">
             Học sinh: {!user ? "Đang tải tên học sinh..." : user.fullname}
           </Row>
@@ -58,49 +58,13 @@ const Formscore = ({ closeModal, studentchoose, isReset }) => {
           </Form.Item>
           {submission ? (
             <>
-              <img
-                src={getBase64ImageSrc(submission.image)}
-                alt="Ảnh"
-                style={{ maxWidth: "50%" }}
-              />
-              {/* <Form.Item name="score">
-                <Row className="mb-2">Điểm</Row>
-                <Row>
-                  <Col className="flex gap-2 w-full">
-                    <Form.Item
-                      name="score"
-                      rules={[
-                        {
-                          validator: validateScore,
-                        },
-                      ]}
-                    >
-                      <Input
-                        name="score"
-                        placeholder="Điền điểm số"
-                        maxLength={2}
-                        minLength={0}
-                        disabled={!editableScore}
-                        type="number"
-                        className="bg-white px-4 py-2 rounded-lg text-sm bg-inherit focus:outline-none w-96"
-                      />
-                    </Form.Item>
-                    {!editableScore ? (
-                      <Button
-                        type="text"
-                        icon={<EditOutlined />}
-                        onClick={() => setEditableScore(true)}
-                      />
-                    ) : (
-                      <Button
-                        type="text"
-                        icon={<CloseOutlined />}
-                        onClick={() => setEditableScore(false)}
-                      />
-                    )}
-                  </Col>
-                </Row>
-              </Form.Item> */}
+              {submission.image && (
+                <img
+                  src={getBase64ImageSrc(submission.image)}
+                  alt="Ảnh"
+                  style={{ maxWidth: "50%" }}
+                />
+              )}
               <Form.Item name="score">
                 <Row className="mb-2">Điểm</Row>
                 <Row className="">
@@ -174,14 +138,14 @@ const Formscore = ({ closeModal, studentchoose, isReset }) => {
             "Đang tải..."
           )}
         </Row>
-        <Row className="flex justify-between px-6 py-4 shadow-top bg-white sticky bottom-0">
+        <Row className="flex justify-between px-6 py-4 shadow-2xl shadow-top bg-slate-200 fixed bottom-0 w-full z-50">
           <Col>
-            <button onClick={closeModal}>Hủy</button>
+            <Button onClick={closeModal}>Hủy</Button>
           </Col>
           <Col>
-            <button type="primary" htmlType="submit">
+            <Button loading={loading} type="primary" htmlType="submit">
               Chấm điểm
-            </button>
+            </Button>
           </Col>
         </Row>
       </Form>

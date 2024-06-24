@@ -8,20 +8,20 @@ import LoginTeacherForm from "./teacher/loginform";
 
 const LoginForm = () => {
   let [categories] = useState({
-    Student: [
+    'Đăng nhập': [
       {
         id: 1,
-        title: "Sinh Viên",
+        title: "Đăng nhập",
         content: <LoginStudentForm />,
       },
     ],
-    Teacher: [
-      {
-        id: 2,
-        title: "Giảng Viên",
-        content: <LoginTeacherForm />,
-      },
-    ],
+    // Teacher: [
+    //   {
+    //     id: 2,
+    //     title: "Giảng Viên",
+    //     content: <LoginTeacherForm />,
+    //   },
+    // ],
   });
   return (
     <motion.div

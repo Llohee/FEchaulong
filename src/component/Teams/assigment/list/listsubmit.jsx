@@ -4,7 +4,6 @@ import { Table } from "antd";
 import moment from "moment";
 import Score from "./score/score";
 import { useParams } from "react-router-dom";
-
 const ListSubmit = () => {
   const { getSubmitssions } = useListSumit();
   const { id, assignmentId } = useParams();
@@ -19,6 +18,12 @@ const ListSubmit = () => {
     }
   }, [studentchoose, isOpen]);
   const columns = [
+    {
+      title: "STT",
+      dataIndex: "index",
+      key: "index",
+      render: (text, record, index) => index + 1,
+    },
     {
       title: "Họ và tên",
       dataIndex: "user",
@@ -80,7 +85,7 @@ const ListSubmit = () => {
   ];
   return (
     <div>
-      <Table dataSource={getSubmitssions} columns={columns} />
+      <Table pagination={{ pageSize: 5, style: { color: "white" } }} dataSource={getSubmitssions} columns={columns} className="custom-table"/>
       {isOpen && submissions && (
         <Score
           isOpen={isOpen}

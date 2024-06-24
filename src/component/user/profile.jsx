@@ -7,7 +7,6 @@ import { checkPhoneVN, emailRegex, phoneRegex } from "../../hooks/regex";
 import moment from "moment";
 import { CloseOutlined, EditOutlined } from "@ant-design/icons";
 import TextArea from "antd/es/input/TextArea";
-import TeamAvatar from "../../ui/avatar/teamavatar";
 
 const Profile = () => {
   const { userLogin } = useLoginForm();
@@ -63,7 +62,6 @@ const Profile = () => {
         onFinish={handleSubmit}
         className="flex flex-col gap-8 container mx-auto max-w-[1000px] justify-center  my-10"
       >
-        {/* <TeamAvatar name={userLogin.fullname} /> */}
         <Col className="w-full grid grid-cols-2 px-6 gap-4">
           <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-violet-200/50">
             <Row className="">Họ và tên</Row>

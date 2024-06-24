@@ -4,13 +4,14 @@ import { allTeams, useGetAllTeams } from "../../api/teams-api";
 import Avatar from "../../ui/avatar/avatar";
 import TeamAvatar from "../../ui/avatar/teamavatar";
 import { Link } from "react-router-dom";
+import Loading from "../../ui/Loading/loading";
 
 const Teams = () => {
+  const { allTeams, loading } = useGetAllTeams();
   return (
     <div className="sub_container">
-      <div className="flex px-8 py-4 justify-between border ">
-        <div className="text-xl">Teams</div>
-        <button className="bg-violet-300 flex items-center gap-2 border-2 rounded-md px-2 py-1">
+      <div className="flex px-8 py-4 justify-end mt-8">
+        <button className="bg-slate-600 flex items-center gap-2 border-2 rounded-md px-2 py-1">
           <svg
             width="18px"
             height="18px"
@@ -45,16 +46,15 @@ const Teams = () => {
               </g>
             </g>
           </svg>
-          <p className="text-white text-lg">Tham gia lớp học</p>
+          <p className="text-white text-lg">Tạo lớp học</p>
         </button>
       </div>
-      <AllTeam />
+      {loading ? <Loading /> : <AllTeam allTeams={allTeams} />}
     </div>
   );
 };
 
-const AllTeam = () => {
-  const { allTeams } = useGetAllTeams();
+const AllTeam = ({ allTeams }) => {
   return (
     <div className="flex flex-wrap gap-14 p-8">
       {allTeams.map((team, index) => (
@@ -64,7 +64,7 @@ const AllTeam = () => {
               boxShadow:
                 "rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px",
             }}
-            className="bg-violet-300 hover:bg-opacity-65 w-56 py-6 rounded-lg flex flex-col justify-center items-center gap-2"
+            className=" hover:bg-opacity-65 w-56 py-6 rounded-lg flex flex-col justify-center items-center gap-2"
           >
             <TeamAvatar name={team.name} />
             <div className="text-xl text-white">{team.name}</div>

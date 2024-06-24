@@ -3,7 +3,7 @@ import { useLoginForm } from "../../api/login-api";
 import Avatar from "../../ui/avatar/avatar";
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import HomeSVG from "../../images/Homesvg.svg";
 
@@ -81,18 +81,41 @@ const Header = () => {
           />
         </svg>
       ),
-    }, 
+    },
   ]);
-
+  const [pagetitle] = useState([
+    {
+      id: 1,
+      title: "Lớp học",
+      link: "/teams",
+    },
+    {
+      id: 2,
+      title: "Quản lý học sinh",
+      link: "/students",
+    },
+  ]);
+  const [items, setItems] = pagetitle;
+  const location = useLocation();
   return (
-    <div className="bg-violet-500 black h-14 w-screen flex justify-between items-center px-4 top-0 fixed z-[1000]">
-      <button onClick={() => navigate("/home")}>
-        <img src={HomeSVG} className="w-10 h-10" />
-      </button>
+    <div className="bg-slate-600 min-h-[65.6px] black py-2 w-screen flex justify-between items-center px-4 top-0 fixed z-[510]  border-b-2 border-border-1">
+      <div className="flex gap-12 items-center">
+        <button onClick={() => navigate("/home")}>
+          <img src={HomeSVG} className="w-10 h-10" />
+        </button>
+        {pagetitle.map(
+          (item) =>
+            location.pathname.startsWith(item.link) && (
+              <div key={item.id} className="text-2xl text-white">{item.title}</div>
+            )
+        )}
+      </div>
       <div className="inline-flex gap-4 items-center justify-end">
         <div className="flex-col">
           <div className="text-white text-label-1">{userLogin.fullname}</div>
-          <div className="text-grey-2 underline underline-offset-1 text-label-5">{userLogin.email}</div>
+          <div className="text-blue-400 underline underline-offset-1 text-label-5">
+            {userLogin.email}
+          </div>
         </div>
         <Menu
           as="div"
@@ -112,7 +135,7 @@ const Header = () => {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="bg-violet-200 border border-grey-4 p-2 rounded-md absolute flex flex-col gap-0 right-0 mt-2 w-60 origin-top-right divide-y-[1px] divide-grey-3 bg-grey-1 shadow-lg focus:outline-none z-[8000]">
+            <Menu.Items className="bg-slate-500 border border-grey-4 p-2 rounded-md absolute flex flex-col gap-0 right-0 mt-2 w-60 origin-top-right divide-y-[1px] divide-grey-3 bg-grey-1 shadow-lg focus:outline-none z-[8000]">
               {listMenuItems.map((val, index) => (
                 <Menu.Item key={index}>
                   {val.link ? (
@@ -120,16 +143,16 @@ const Header = () => {
                       onClick={() => val.onClick?.()}
                       to={val.link}
                       target="_parent"
-                      className="flex gap-2 hover:rounded-md px-3 py-2 hover:bg-grey-3 active:bg-grey-4 focus:bg-grey-4"
+                      className="text-white flex gap-2 hover:rounded-md px-3 py-2 hover:bg-grey-3 active:bg-grey-4 focus:bg-grey-4"
                     >
-                      <div className="my-auto text-typography-title">
+                      <div className="my-auto text-white">
                         {val.icon}
                       </div>
 
                       <div className="flex flex-col ">
                         {!val.name && (val.title ?? "")}
                         <div>{val.name && val.name}</div>
-                        <div className="text-[14px] truncate max-w-[180px]">
+                        <div className="text-[14px] truncate max-w-[180px] text-white">
                           {val.email && val.email}
                         </div>
                       </div>
@@ -137,12 +160,12 @@ const Header = () => {
                   ) : (
                     <button
                       onClick={() => val.onClick?.()}
-                      className="flex gap-2 hover:rounded-md px-3 py-2 hover:bg-grey-3 active:bg-grey-4 focus:bg-grey-4"
+                      className="text-white hover:text-blue-400 flex gap-2 hover:rounded-md px-3 py-2 hover:bg-grey-3 active:bg-grey-4 focus:bg-grey-4"
                     >
-                      <div className="my-auto text-typography-title">
+                      <div className="my-auto">
                         {val.icon}
                       </div>
-                      <div>{val.title ?? ""}</div>
+                      <div className="">{val.title ?? ""}</div>
                     </button>
                   )}
                 </Menu.Item>
@@ -152,7 +175,6 @@ const Header = () => {
         </Menu>
       </div>
     </div>
-    
   );
 };
 

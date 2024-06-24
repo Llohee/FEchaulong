@@ -38,7 +38,7 @@ export const ComboboxOptions = React.forwardRef(
     <Combobox.Options
       ref={ref}
       className={cx(
-        "bg-white absolute z-50 my-3 max-h-56 w-full list-none overflow-auto rounded-lg py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm",
+        "bg-slate-100 absolute z-50 my-3 max-h-56 w-full list-none overflow-auto rounded-lg py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm",
         className
       )}
       {...props}
@@ -62,7 +62,7 @@ export const ComboboxOption = React.forwardRef(
     <Combobox.Option
       ref={ref}
       className={cx(
-        "cursor-pointer select-none px-4 py-3 ui-active:bg-violet-200 ui-selected:bg-violet-200",
+        "cursor-pointer select-none px-4 py-3 ui-active:bg-slate-200 ui-selected:bg-slate-200",
         className
       )}
       {...props}

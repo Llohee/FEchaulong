@@ -3,12 +3,14 @@ import axios from "axios";
 import { message } from "antd";
 
 export const useAssigment = () => {
+  const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [activeAssigments, setActiveAssigments] = useState([]);
   const [inactiveAssigments, setInactiveAssigments] = useState([]);
   const [getAssignmentById, setGetAssignmentById] = useState([]);
 
   const ActiveAssigments = async (Teamid) => {
+    setLoading(true);
     try {
       const url = `${process.env.REACT_APP_PUBLIC_BACK_END_DOMAIN}/teams/${Teamid}/active-homeworks`;
       const { data } = await axios.get(url, {
@@ -19,10 +21,13 @@ export const useAssigment = () => {
       setActiveAssigments(data.activeHomeworks);
     } catch (error) {
       setErrorMessage(error.response.data.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   const InactiveAssigments = async (Teamid) => {
+    setLoading(true);
     try {
       const url = `${process.env.REACT_APP_PUBLIC_BACK_END_DOMAIN}/teams/${Teamid}/inactive-homeworks`;
       const { data } = await axios.get(url, {
@@ -33,6 +38,8 @@ export const useAssigment = () => {
       setInactiveAssigments(data.inactiveHomeworks);
     } catch (error) {
       setErrorMessage(error.response.data.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -122,6 +129,7 @@ export const useAssigment = () => {
     }
   };
   const updateSubmission = async (Teamid, homeworkId, submissionId, values) => {
+    setLoading(true)
     try {
       const url = `${process.env.REACT_APP_PUBLIC_BACK_END_DOMAIN}/teams/${Teamid}/${homeworkId}/update-submission/${submissionId}`;
       const response = await axios.put(url, values, {
@@ -133,6 +141,8 @@ export const useAssigment = () => {
     } catch (error) {
       console.error("Error updating submission score and comment:", error);
       message.error(error.response.data.error || "Error updating submission");
+    }finally{
+      setLoading(false)
     }
   };
   return {
@@ -148,5 +158,6 @@ export const useAssigment = () => {
     errorMessage,
     activeAssigments,
     inactiveAssigments,
+    loading,
   };
 };
