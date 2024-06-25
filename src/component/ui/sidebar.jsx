@@ -6,7 +6,8 @@ import Students from "../../page/StudentsPage";
 import { Tab } from "@headlessui/react";
 
 const Sidebar = () => {
-  const { userRole } = useLoginForm();
+  const { userLogin } = useLoginForm();
+  console.log(userLogin);
   const navigate = useNavigate();
   const [SlideItems] = useState([
     {
@@ -60,6 +61,7 @@ const Sidebar = () => {
           </g>
         </svg>
       ),
+      role: ["stu", "admin"],
       link: "/teams",
     },
     {
@@ -90,6 +92,7 @@ const Sidebar = () => {
           </g>
         </svg>
       ),
+      role: ["stu", "admin"],
       // link: "/teams",
     },
     {
@@ -134,6 +137,7 @@ const Sidebar = () => {
         </svg>
       ),
       // link: "/teams",
+      role: ["stu", "admin"],
     },
     {
       id: 3,
@@ -164,6 +168,7 @@ const Sidebar = () => {
         </svg>
       ),
       link: "/notebook",
+      role: ["stu", "admin"],
     },
     {
       id: 4,
@@ -194,6 +199,7 @@ const Sidebar = () => {
           </g>
         </svg>
       ),
+      role: ["stu", "admin"],
     },
     {
       id: 5,
@@ -226,6 +232,7 @@ const Sidebar = () => {
           </g>
         </svg>
       ),
+      role: ["stu", "admin"],
     },
     {
       id: 6,
@@ -258,34 +265,44 @@ const Sidebar = () => {
         </svg>
       ),
       link: "/students",
+      role: ["admin"],
     },
   ]);
   const location = useLocation();
+  const hasAccess = (userRoles, allowedRoles) => {
+    if (!Array.isArray(userRoles) || !Array.isArray(allowedRoles)) {
+      return false;
+    }
+    return userRoles.some(role => allowedRoles.includes(role));
+  };
   return (
     <div className="h-screen bg-slate-700 flex flex-col gap-6 pl-3 pr-2 fixed top-0 left-0 z-[500] border-r-2 border-slate-600 pt-[70px]">
-      {SlideItems.map((item) => (
-        <Link to={`${item.link}`} className="flex" key={item.id}>
-          <div
-            className={`flex flex-col text-center relative justify-center items-center hover:cursor-pointer ${
-              location.pathname.startsWith(item.link)
-                ? "text-blue-400"
-                : "text-white"
-            }`}
-          >
-            {location.pathname.startsWith(item.link) && (
-              <div className="w-[5px] h-full bg-blue-400 absolute -left-3"></div>
-            )}
-            {React.cloneElement(item.svg, {
-              style: {
-                fill: location.pathname.startsWith(item.link)
-                  ? "currentColor"
-                  : "",
-              },
-            })}
-            <p>{item.content}</p>
-          </div>
-        </Link>
-      ))}
+      {SlideItems.map(
+        (item) =>
+          hasAccess(userLogin.role, item.role) && (
+            <Link to={`${item.link}`} className="flex" key={item.id}>
+              <div
+                className={`flex flex-col text-center relative justify-center items-center hover:cursor-pointer ${
+                  location.pathname.startsWith(item.link)
+                    ? "text-blue-400"
+                    : "text-white"
+                }`}
+              >
+                {location.pathname.startsWith(item.link) && (
+                  <div className="w-[5px] h-full bg-blue-400 absolute -left-3"></div>
+                )}
+                {React.cloneElement(item.svg, {
+                  style: {
+                    fill: location.pathname.startsWith(item.link)
+                      ? "currentColor"
+                      : "",
+                  },
+                })}
+                <p>{item.content}</p>
+              </div>
+            </Link>
+          )
+      )}
     </div>
   );
 };

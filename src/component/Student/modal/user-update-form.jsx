@@ -38,7 +38,7 @@ const UserUpdateForm = ({ closeModal, studentDetail, isReset }) => {
         className="flex flex-col gap-4 pt-4"
       >
         <Col className="w-full grid grid-cols-2 px-6 gap-4">
-          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-violet-200/50">
+          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-slate-200/50">
             <Row className="">Họ và tên</Row>
             <Form.Item name="fullname">
               <Input
@@ -49,7 +49,7 @@ const UserUpdateForm = ({ closeModal, studentDetail, isReset }) => {
               />
             </Form.Item>
           </Col>
-          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-violet-200/50">
+          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-slate-200/50">
             <Row className="">Ngày tháng năm sinh</Row>
             <Form.Item name="birthday">
               <DatePicker
@@ -61,7 +61,7 @@ const UserUpdateForm = ({ closeModal, studentDetail, isReset }) => {
               />
             </Form.Item>
           </Col>
-          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-violet-200/50">
+          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-slate-200/50">
             <Row className="">Email</Row>
             <Form.Item
               name="email"
@@ -76,7 +76,7 @@ const UserUpdateForm = ({ closeModal, studentDetail, isReset }) => {
               <Input name="email" placeholder="Email" type="email" />
             </Form.Item>
           </Col>
-          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-violet-200/50">
+          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-slate-200/50">
             <Row className="">Mã số sinh viên</Row>
             <Form.Item
               name="code"
@@ -94,7 +94,7 @@ const UserUpdateForm = ({ closeModal, studentDetail, isReset }) => {
               />
             </Form.Item>
           </Col>
-          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-violet-200/50">
+          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-slate-200/50">
             <Row className="">Trường học</Row>
             <Form.Item
               name="school"
@@ -108,7 +108,7 @@ const UserUpdateForm = ({ closeModal, studentDetail, isReset }) => {
               <Input name="school" placeholder="Nhập trường học" type="text" />
             </Form.Item>
           </Col>
-          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-violet-200/50">
+          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-slate-200/50">
             <Row className="">Số điện thoại</Row>
             <Form.Item
               name="phone"
@@ -132,7 +132,7 @@ const UserUpdateForm = ({ closeModal, studentDetail, isReset }) => {
               />
             </Form.Item>
           </Col>
-          <Col className="col-span-2 px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-violet-200/50">
+          <Col className="col-span-2 px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-slate-200/50">
             <Row className="mb-2">Địa chỉ</Row>
             <Form.Item
               name="address"
@@ -147,7 +147,7 @@ const UserUpdateForm = ({ closeModal, studentDetail, isReset }) => {
             </Form.Item>
           </Col>
         </Col>
-        <Row className="flex justify-between px-6 py-4 shadow-top bg-white sticky bottom-0 border-t-2 border-violet-200">
+        <Row className="flex justify-between px-6 py-4 shadow-top bg-white sticky bottom-0 border-t-2 border-slate-200">
           <Col>
             <Button onClick={() => setIsOpen(true)}>Hủy</Button>
           </Col>

@@ -29,12 +29,13 @@ const Upcoming = () => {
                 key={act._id}
                 className="bg-slate-200/50 p-4 shadow-lg rounded-lg col-span-1"
               >
-                <div className="text-2xl">
+                <div className="text-2xl flex gap-2">
+                 Ngày bắt đầu:{" "}
                   {moment(act.start_time).format("dddd, DD-MM-YYYY hh:mm A")}
                 </div>
                 <div className="">{act.name}</div>
                 <div className="text-red-500">
-                  End Time:{" "}
+                  Ngày kết thúc:{" "}
                   {moment(act.end_time).format("dddd, DD-MM-YYYY hh:mm A")}
                 </div>
               </button>

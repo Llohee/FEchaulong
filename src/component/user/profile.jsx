@@ -60,10 +60,11 @@ const Profile = () => {
       <Form
         form={form}
         onFinish={handleSubmit}
-        className="flex flex-col gap-8 container mx-auto max-w-[1000px] justify-center  my-10"
+        className="flex flex-col gap-8 container mx-auto max-w-[1000px] justify-center my-10"
       >
+        <Row className="text-2xl text-white">Thông tin</Row>
         <Col className="w-full grid grid-cols-2 px-6 gap-4">
-          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-violet-200/50">
+          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-slate-200/50">
             <Row className="">Họ và tên</Row>
             <Form.Item name="fullname">
               <Input
@@ -74,7 +75,7 @@ const Profile = () => {
               />
             </Form.Item>
           </Col>
-          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-violet-200/50">
+          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-slate-200/50">
             <Row className="">Ngày tháng năm sinh</Row>
             <Form.Item name="birthday" className="w-full">
               <DatePicker
@@ -86,7 +87,7 @@ const Profile = () => {
               />
             </Form.Item>
           </Col>
-          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-violet-200/50">
+          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-slate-200/50">
             <Row className="flex items-center justify-between">
               <Col className="">Email</Col>
               <Col>
@@ -124,7 +125,7 @@ const Profile = () => {
               />
             </Form.Item>
           </Col>
-          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-violet-200/50">
+          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-slate-200/50">
             <Row className="flex justify-between items-center">
               <Row className="">Mã số sinh viên</Row>
               {!editable.code ? (
@@ -161,7 +162,7 @@ const Profile = () => {
               </Form.Item>
             </Row>
           </Col>
-          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-violet-200/50">
+          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-slate-200/50">
             <Row className="flex justify-between items-center">
               <Row className="">Trường học</Row>
               {!editable.school ? (
@@ -198,7 +199,7 @@ const Profile = () => {
               </Form.Item>
             </Row>
           </Col>
-          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-violet-200/50">
+          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-slate-200/50">
             <Row className="flex justify-between items-center">
               <Row className="">Số điện thoại</Row>
               {!editable.phone ? (
@@ -241,7 +242,7 @@ const Profile = () => {
               </Form.Item>
             </Row>
           </Col>
-          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-violet-200/50">
+          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-slate-200/50">
             <Row className="flex justify-between items-center">
               <Row className="">Địa chỉ</Row>
               {!editable.address ? (
@@ -273,7 +274,7 @@ const Profile = () => {
               </Form.Item>
             </Row>
           </Col>
-          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-violet-200/50">
+          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-slate-200/50">
             <Row className="">Ngày tạo</Row>
             <Form.Item name="created_date" className="w-full">
               <DatePicker
@@ -285,7 +286,7 @@ const Profile = () => {
               />
             </Form.Item>
           </Col>
-          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-violet-200/50">
+          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-slate-200/50">
             <Row className="">Người cập nhật</Row>
             <Form.Item name="updated_by" className="w-full">
               <Input
@@ -296,7 +297,7 @@ const Profile = () => {
               />
             </Form.Item>
           </Col>
-          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-violet-200/50">
+          <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-slate-200/50">
             <Row className="">Ngày cập nhật</Row>
             <Form.Item name="updated_date" className="w-full">
               <DatePicker
@@ -309,13 +310,15 @@ const Profile = () => {
             </Form.Item>
           </Col>
         </Col>
-        <Button
-          htmlType="submit"
-          loading={submitting}
-          className="bg-violet-300 hover:bg-violet-300 text-black w-fit"
-        >
-          Cập nhật thông tin
-        </Button>
+        <Row className="flex justify-end w-full">
+          <Button
+            htmlType="submit"
+            loading={submitting}
+            className="bg-slate-300 hover:bg-slate-300 text-black w-fit"
+          >
+            Cập nhật thông tin
+          </Button>
+        </Row>
       </Form>
     </div>
   );

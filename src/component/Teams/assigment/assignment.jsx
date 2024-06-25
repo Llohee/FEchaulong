@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useAssigment } from "../../../api/assignment";
 import moment from "moment";
-import { Button, Col, Form, Row, Upload, message } from "antd";
+import { Button, Col, Form, Input, Row, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import TextArea from "antd/es/input/TextArea";
 import { useLoginForm } from "../../../api/login-api";
@@ -12,22 +12,33 @@ import { Tab } from "@headlessui/react";
 
 const Assignment = () => {
   const { id } = useParams();
+  const { userLogin } = useLoginForm();
+  console.log(userLogin)
   const assigment = [
     {
       title: "Đề bài",
       content: <AssignmentContent />,
+      role: ["stu", "admin"],
     },
     {
       title: "Đã nộp bài",
       content: <ListSubmit />,
+      role: ["admin"],
     },
     {
       title: "Chưa nộp bài",
       content: <Listnonsubmit />,
+      role: ["admin"],
     },
   ];
+  const hasAccess = (userRoles, allowedRoles) => {
+    if (!Array.isArray(userRoles) || !Array.isArray(allowedRoles)) {
+      return false;
+    }
+    return userRoles.some(role => allowedRoles.includes(role));
+  };
   return (
-    <div className="sub_chil_container max-h-screen">
+    <div className="sub_chil_container min-h-screen">
       <Tab.Group>
         <div className="flex justify-between h-12 mt-4">
           <Tab.List className="flex gap-8">
@@ -67,19 +78,20 @@ const Assignment = () => {
                 <p>Tất cả các lớp</p>
               </button>
             </Link>
-            {assigment.map(({ title }) => (
-              <Tab
-                key={title}
-                className={({ selected }) =>
-                  selected
-                    ? "bg-slate-400 p-2 rounded-lg text-white min-w-[150px]"
-                    : "p-2 hover:bg-slate-400 rounded-lg text-white min-w-[150px]"
-                }
-                onFocus={null}
-              >
-                {title}
-              </Tab>
-            ))}
+            {assigment.map(({ title, role }) =>
+              hasAccess(userLogin?.role, role) ? (
+                <Tab
+                  key={title}
+                  className={({ selected }) =>
+                    selected
+                      ? `bg-slate-400 p-2 rounded-lg text-white min-w-[150px] `
+                      : `p-2 hover:bg-slate-400 rounded-lg text-white min-w-[150px] `
+                  }
+                >
+                  {title}
+                </Tab>
+              ) : null
+            )}
           </Tab.List>
         </div>
         <Tab.Panels className="mt-6">
@@ -93,6 +105,8 @@ const Assignment = () => {
 };
 
 const AssignmentContent = () => {
+  const [userSubmitted, setUserSubmitted] = useState(false);
+  const { userLogin } = useLoginForm();
   const { id, assignmentId } = useParams();
   const { getAssignmentById, getbyid, onSubmitAssigment, deleteAssignment } =
     useAssigment();
@@ -104,10 +118,15 @@ const AssignmentContent = () => {
   const getBase64ImageSrc = (base64Data) => {
     return `data:image/png;base64,${base64Data}`;
   };
+  const roles = userLogin?.role ?? [];
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-col gap-2">
-        <div className="text-2xl text-white">Tên: {getAssignmentById.name}</div>
+        <div className="flex">
+          <div className="text-2xl text-white">
+            Tên: {getAssignmentById.name}
+          </div>
+        </div>
         <div className="flex text-red-300">
           <p className="pr-2">Hết hạn:</p>
           {moment(getAssignmentById.end_time).format(
@@ -125,12 +144,17 @@ const AssignmentContent = () => {
           Mô tả: {getAssignmentById.description}
         </div>
       </div>
-      <FormAssignment />
+      {roles.includes("stu") && (
+        <FormAssignment
+          setUserSubmitted={setUserSubmitted}
+          userSubmitted={userSubmitted}
+        />
+      )}
     </div>
   );
 };
 
-const FormAssignment = () => {
+const FormAssignment = ({ setUserSubmitted, userSubmitted }) => {
   const { id, assignmentId } = useParams();
   const { getAssignmentById, getbyid, onSubmitAssigment, deleteAssignment } =
     useAssigment();
@@ -138,7 +162,7 @@ const FormAssignment = () => {
   const [assignment, setAssignment] = useState(null);
   const [file, setFile] = useState(null);
   const [submitting, setSubmitting] = useState(false);
-  const [userSubmitted, setUserSubmitted] = useState(false);
+
   const [submitton, setSubmittion] = useState([]);
   const [form] = Form.useForm();
   const [deleted, setDeleted] = useState(false);
@@ -202,6 +226,11 @@ const FormAssignment = () => {
         form.setFieldsValue({
           description: userSubmission.description,
           image: userSubmission.image,
+          score: userSubmission.score,
+          comment: userSubmission.comment,
+          submitted_time: moment(userLogin.submitted_time).isValid()
+            ? moment(userLogin.submitted_time)
+            : null,
         });
         setFile(userSubmission.image);
       }
@@ -224,7 +253,7 @@ const FormAssignment = () => {
               <Button
                 htmlType="submit"
                 loading={submitting}
-                className="bg-violet-300 hover:bg-violet-300 text-black"
+                // className="bg-violet-300 hover:bg-violet-300 text-black"
               >
                 Nộp bài
               </Button>
@@ -237,7 +266,7 @@ const FormAssignment = () => {
             <TextArea
               rows={4}
               disabled={userSubmitted}
-              className="text-white"
+              className="text-black disabled:text-white"
             />
           </Form.Item>
         </Col>
@@ -252,13 +281,49 @@ const FormAssignment = () => {
               <Button
                 icon={<UploadOutlined />}
                 disabled={userSubmitted}
-                className="text-white"
+                className="text-black disabled:text-white"
               >
                 Select Image
               </Button>
             </Upload>
           </Form.Item>
         </Col>
+        {userSubmitted && (
+          <>
+            <Col className="grid grid-cols-2 gap-10">
+              <Col className="flex flex-col gap-2">
+                <Row className="text-white">Đã nộp vào</Row>
+                <Form.Item name="submitted_time">
+                  <Input
+                    name="submitted_time"
+                    className="disabled:text-white"
+                    disabled
+                  />
+                </Form.Item>
+              </Col>
+              <Col className="flex flex-col gap-2">
+                <Row className="text-white">Điểm số</Row>
+                <Form.Item name="score">
+                  <Input
+                    name="sscore"
+                    className="disabled:text-white"
+                    disabled
+                  />
+                </Form.Item>
+              </Col>
+            </Col>
+            <Col className="flex flex-col gap-2">
+              <Row className="text-white">Nhận xét</Row>
+              <Form.Item name="comment">
+                <TextArea
+                  name="comment"
+                  className="disabled:text-white"
+                  disabled
+                />
+              </Form.Item>
+            </Col>
+          </>
+        )}
       </Form>
     </div>
   );

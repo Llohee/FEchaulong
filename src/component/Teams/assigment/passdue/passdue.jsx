@@ -23,9 +23,11 @@ const Passdue = () => {
         <>
           {inactiveAssigments.map((act) => (
             <button
+              onClick={() =>
+                navigate(`/teams/team/${id}/assignments/${act._id}`)
+              }
               key={act._id}
               className="bg-slate-200/50 p-4 shadow-lg rounded-lg col-span-1"
-              onClick={() => navigate(`teams/${id}/assignments/${act._id}`)}
             >
               <div className="text-2xl">
                 {moment(act.start_time).format("dddd, DD-MM-YYYY hh:mm A")}

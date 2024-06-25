@@ -36,9 +36,12 @@ function App() {
               <Route path="team/:id" element={<TeamPage />}>
                 <Route path="" element={<Home />} />
                 <Route path="notebook" element={<NoteBook />} />
+                <Route path="classwork" element={<ClassWork />} />
                 <Route path="assignments" element={<AssignmentPage />}>
                   <Route path="" element={<Assignments />} />
                   <Route path=":assignmentId" element={<Assignment />} />
+                  {/* <Route path="passdue/:assignmentId" element={<Assignment />} />
+                  <Route path="compeleted/:assignmentId" element={<Assignment />} /> */}
                 </Route>
               </Route>
             </Route>

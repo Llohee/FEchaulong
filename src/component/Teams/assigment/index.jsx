@@ -7,22 +7,32 @@ import { useLoginForm } from "../../../api/login-api";
 import CreateAssignment from "./create/createAssignment";
 
 const Assignments = () => {
-  const { userRole } = useLoginForm();
+  const { userLogin } = useLoginForm();
   const assigment = [
     {
       title: "Đang diễn ra",
       content: <Upcoming />,
+      role: ["stu", "admin"],
     },
     {
       title: "Đã hết hạn",
       content: <Passdue />,
+      role: ["stu", "admin"],
     },
     {
       title: "Đã hoàn thành",
       content: <Compeleted />,
+      role: ["stu"],
     },
   ];
   const [isOpen, setIsOpen] = useState(false);
+  const hasAccess = (userRoles, allowedRoles) => {
+    if (!Array.isArray(userRoles) || !Array.isArray(allowedRoles)) {
+      return false;
+    }
+    return userRoles.some((role) => allowedRoles.includes(role));
+  };
+  const roles = userLogin?.role ?? [];
   return (
     <>
       <div className="sub_chil_container text-black">
@@ -33,21 +43,23 @@ const Assignments = () => {
         <Tab.Group>
           <div className="flex justify-between m-2 h-12">
             <Tab.List className="flex gap-8">
-              {assigment.map(({ title }) => (
-                <Tab
-                  key={title}
-                  className={({ selected }) =>
-                    selected
-                      ? "bg-slate-400 p-2 rounded-lg text-white"
-                      : "p-2 hover:bg-slate-300 rounded-lg text-white"
-                  }
-                  onFocus={null}
-                >
-                  {title}
-                </Tab>
-              ))}
+              {assigment.map(({ title, role }) =>
+                hasAccess(userLogin?.role, role) ? (
+                  <Tab
+                    key={title}
+                    className={({ selected }) =>
+                      selected
+                        ? "bg-slate-400 p-2 rounded-lg text-white"
+                        : "p-2 hover:bg-slate-300 rounded-lg text-white"
+                    }
+                    onFocus={null}
+                  >
+                    {title}
+                  </Tab>
+                ) : null
+              )}
             </Tab.List>
-            {userRole.includes("admin") ? (
+            {roles.includes("admin") ? (
               <button
                 onClick={() => {
                   setIsOpen(true);

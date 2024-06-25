@@ -8,7 +8,7 @@ export const useAssigment = () => {
   const [activeAssigments, setActiveAssigments] = useState([]);
   const [inactiveAssigments, setInactiveAssigments] = useState([]);
   const [getAssignmentById, setGetAssignmentById] = useState([]);
-
+  const [compeletedAssignment, setCompeletedAssginment] = useState([]);
   const ActiveAssigments = async (Teamid) => {
     setLoading(true);
     try {
@@ -42,7 +42,22 @@ export const useAssigment = () => {
       setLoading(false);
     }
   };
-
+  const CompeletedAsssginments = async (Teamid, id) => {
+    setLoading(true);
+    try {
+      const url = `${process.env.REACT_APP_PUBLIC_BACK_END_DOMAIN}/teams/${Teamid}/submissions/${id}`;
+      const { data } = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      setCompeletedAssginment(data.submissions);
+    } catch (error) {
+      setErrorMessage(error.response.data.message);
+    } finally {
+      setLoading(false);
+    }
+  };
   const getbyid = async (Teamid, id) => {
     try {
       const url = `${process.env.REACT_APP_PUBLIC_BACK_END_DOMAIN}/teams/${Teamid}/homework/${id}`;
@@ -129,7 +144,7 @@ export const useAssigment = () => {
     }
   };
   const updateSubmission = async (Teamid, homeworkId, submissionId, values) => {
-    setLoading(true)
+    setLoading(true);
     try {
       const url = `${process.env.REACT_APP_PUBLIC_BACK_END_DOMAIN}/teams/${Teamid}/${homeworkId}/update-submission/${submissionId}`;
       const response = await axios.put(url, values, {
@@ -141,13 +156,14 @@ export const useAssigment = () => {
     } catch (error) {
       console.error("Error updating submission score and comment:", error);
       message.error(error.response.data.error || "Error updating submission");
-    }finally{
-      setLoading(false)
+    } finally {
+      setLoading(false);
     }
   };
   return {
     ActiveAssigments,
     InactiveAssigments,
+    CompeletedAsssginments,
     getbyid,
     updateSubmission,
     onFinishFailed,
@@ -155,6 +171,7 @@ export const useAssigment = () => {
     deleteAssignment,
     createAssignment,
     getAssignmentById,
+    compeletedAssignment,
     errorMessage,
     activeAssigments,
     inactiveAssigments,
