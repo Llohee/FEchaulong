@@ -5,24 +5,9 @@ import { message } from "antd";
 export const useGetAllStudent = () => {
   const [getAllStudent, setGetAllStudent] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  useEffect(() => {
-    const Students = async () => {
-      try {
-        const url = `${process.env.REACT_APP_PUBLIC_BACK_END_DOMAIN}/users/`;
-        const { data } = await axios.get(url, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-        setGetAllStudent(data);
-      } catch (error) {
-        setErrorMessage(error.response.data.message);
-      }
-    };
-    Students();
-  }, []);
+  const [fetchTrigger, setFetchTrigger] = useState(false);
 
-  const updateStudent = async (id, updatedData, setSubmitting) => {
+  const updateStudent = async (id, updatedData) => {
     try {
       const url = `${process.env.REACT_APP_PUBLIC_BACK_END_DOMAIN}/users/${id}`;
       const response = await axios.put(url, updatedData, {
@@ -30,10 +15,12 @@ export const useGetAllStudent = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
+
       message.success(response.data.message);
+      setFetchTrigger((prev) => !prev); // Toggle fetchTrigger to trigger useEffect
     } catch (error) {
       message.error(error.response.data.error);
-    } 
+    }
   };
 
   const deleteStudent = async (id) => {
@@ -44,11 +31,32 @@ export const useGetAllStudent = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      console.log(response);
+
+      message.success(response.data.message); // Assuming your API returns a success message
+      setFetchTrigger((prev) => !prev); // Toggle fetchTrigger to trigger useEffect
     } catch (error) {
-      console.log(error);
+      message.error(error.response.data.error);
     }
   };
+
+  useEffect(() => {
+    const fetchStudents = async () => {
+      try {
+        const url = `${process.env.REACT_APP_PUBLIC_BACK_END_DOMAIN}/users/`;
+        const { data } = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+
+        setGetAllStudent(data);
+      } catch (error) {
+        setErrorMessage(error.response.data.message);
+      }
+    };
+
+    fetchStudents(); 
+  }, [fetchTrigger]);
 
   return { getAllStudent, updateStudent, deleteStudent, errorMessage };
 };

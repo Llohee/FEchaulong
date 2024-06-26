@@ -12,16 +12,18 @@ const Profile = () => {
   const { userLogin } = useLoginForm();
   const { updateStudent } = useGetAllStudent();
   const [submitting, setSubmitting] = useState(false);
-
-  const [form] = Form.useForm();
-
   const [editable, setEditable] = useState({
     email: false,
     phone: false,
+    code: false,
+    school: false,
+    address: false,
   });
 
-  const handleSubmit = () => {
-    updateStudent(userLogin._id, setSubmitting);
+  const [form] = Form.useForm();
+
+  const handleSubmit = (values) => {
+    updateStudent(userLogin._id, values, setSubmitting);
     setEditable({
       email: false,
       code: false,
@@ -31,41 +33,40 @@ const Profile = () => {
     });
   };
 
+  const initialValues = {
+    fullname: userLogin.fullname,
+    birthday: moment(userLogin.birthday).isValid()
+      ? moment(userLogin.birthday)
+      : null,
+    email: userLogin.email,
+    phone: userLogin.phone,
+    school: userLogin.school,
+    code: userLogin.code,
+    address: userLogin.address,
+    updated_by: userLogin.updated_by?.fullname,
+    created_date: moment(userLogin.created_date).isValid()
+      ? moment(userLogin.created_date)
+      : null,
+    updated_date: moment(userLogin.updated_date).isValid()
+      ? moment(userLogin.updated_date)
+      : null,
+  };
+
   useEffect(() => {
-    if (userLogin) {
-      form.setFieldsValue({
-        fullname: userLogin.fullname,
-        birthday: moment(userLogin.birthday).isValid()
-          ? moment(userLogin.birthday)
-          : null,
-        email: userLogin.email,
-        phone: userLogin.phone,
-        school: userLogin.school,
-        code: userLogin.code,
-        address: userLogin.address,
-        updated_by: userLogin.updated_by?.fullname,
-        address: userLogin.address,
-        created_date: moment(userLogin.created_date).isValid()
-          ? moment(userLogin.created_date)
-          : null,
-        updated_date: moment(userLogin.updated_date).isValid()
-          ? moment(userLogin.updated_date)
-          : null,
-      });
-    }
+    form.setFieldsValue(initialValues);
   }, [userLogin, form]);
-  console.log(userLogin);
   return (
-    <div className="sub_container w-full relative">
+    <div className="sub_container w-full relative overflow-hidden">
       <Form
         form={form}
         onFinish={handleSubmit}
-        className="flex flex-col gap-8 container mx-auto max-w-[1000px] justify-center my-10"
+        initialValues={initialValues}
+        className="flex flex-col gap-4 container mx-auto max-w-[1000px] justify-center my-10"
       >
         <Row className="text-2xl text-white">Thông tin</Row>
         <Col className="w-full grid grid-cols-2 px-6 gap-4">
           <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-slate-200/50">
-            <Row className="">Họ và tên</Row>
+            <Row className="min-h-8">Họ và tên</Row>
             <Form.Item name="fullname">
               <Input
                 name="fullname"
@@ -76,7 +77,7 @@ const Profile = () => {
             </Form.Item>
           </Col>
           <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-slate-200/50">
-            <Row className="">Ngày tháng năm sinh</Row>
+            <Row className="min-h-8">Ngày tháng năm sinh</Row>
             <Form.Item name="birthday" className="w-full">
               <DatePicker
                 name="birthday"
@@ -89,8 +90,8 @@ const Profile = () => {
           </Col>
           <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-slate-200/50">
             <Row className="flex items-center justify-between">
-              <Col className="">Email</Col>
-              <Col>
+              <Col className="min-h-8">Email</Col>
+              {/* <Col>
                 {!editable.email ? (
                   <Button
                     type="text"
@@ -104,7 +105,7 @@ const Profile = () => {
                     onClick={() => setEditable({ ...editable, email: false })}
                   />
                 )}
-              </Col>
+              </Col> */}
             </Row>
             <Form.Item
               name="email"
@@ -127,7 +128,7 @@ const Profile = () => {
           </Col>
           <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-slate-200/50">
             <Row className="flex justify-between items-center">
-              <Row className="">Mã số sinh viên</Row>
+              <Row className="min-h-8">Mã số sinh viên</Row>
               {!editable.code ? (
                 <Button
                   type="text"
@@ -146,10 +147,7 @@ const Profile = () => {
               <Form.Item
                 name="code"
                 rules={[
-                  {
-                    required: true,
-                    message: "Hãy điền mã số sinh viên!",
-                  },
+                  { required: true, message: "Hãy điền mã số sinh viên!" },
                 ]}
                 className="w-full"
               >
@@ -157,14 +155,14 @@ const Profile = () => {
                   name="code"
                   placeholder="Nhập mã số sinh viên"
                   disabled={!editable.code}
-                  type="code"
+                  type="text"
                 />
               </Form.Item>
             </Row>
           </Col>
           <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-slate-200/50">
             <Row className="flex justify-between items-center">
-              <Row className="">Trường học</Row>
+              <Row className="min-h-8">Trường học</Row>
               {!editable.school ? (
                 <Button
                   type="text"
@@ -182,12 +180,7 @@ const Profile = () => {
             <Row>
               <Form.Item
                 name="school"
-                rules={[
-                  {
-                    required: true,
-                    message: "Hãy điền trường học!",
-                  },
-                ]}
+                rules={[{ required: true, message: "Hãy điền trường học!" }]}
                 className="w-full"
               >
                 <Input
@@ -201,7 +194,7 @@ const Profile = () => {
           </Col>
           <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-slate-200/50">
             <Row className="flex justify-between items-center">
-              <Row className="">Số điện thoại</Row>
+              <Row className="min-h-8">Số điện thoại</Row>
               {!editable.phone ? (
                 <Button
                   type="text"
@@ -220,10 +213,7 @@ const Profile = () => {
               <Form.Item
                 name="phone"
                 rules={[
-                  {
-                    required: true,
-                    message: "Hãy điền số điện thoại!",
-                  },
+                  { required: true, message: "Hãy điền số điện thoại!" },
                   {
                     pattern: phoneRegex,
                     message: "Sai định dạng số điện thoại",
@@ -234,7 +224,7 @@ const Profile = () => {
                 <Input
                   name="phone"
                   placeholder="Số điện thoại"
-                  type="phone"
+                  type="text"
                   disabled={!editable.phone}
                   onFocus={null}
                   onChange={checkPhoneVN}
@@ -244,7 +234,7 @@ const Profile = () => {
           </Col>
           <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-slate-200/50">
             <Row className="flex justify-between items-center">
-              <Row className="">Địa chỉ</Row>
+              <Row className="min-h-8">Địa chỉ</Row>
               {!editable.address ? (
                 <Button
                   type="text"
@@ -262,12 +252,7 @@ const Profile = () => {
             <Row>
               <Form.Item
                 name="address"
-                rules={[
-                  {
-                    required: true,
-                    message: "Hãy điền địa chỉ!",
-                  },
-                ]}
+                rules={[{ required: true, message: "Hãy điền địa chỉ!" }]}
                 className="w-full"
               >
                 <TextArea rows={1} className="" disabled={!editable.address} />
@@ -275,7 +260,7 @@ const Profile = () => {
             </Row>
           </Col>
           <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-slate-200/50">
-            <Row className="">Ngày tạo</Row>
+            <Row className="min-h-8">Ngày tạo</Row>
             <Form.Item name="created_date" className="w-full">
               <DatePicker
                 name="created_date"
@@ -287,7 +272,7 @@ const Profile = () => {
             </Form.Item>
           </Col>
           <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-slate-200/50">
-            <Row className="">Người cập nhật</Row>
+            <Row className="min-h-8">Người cập nhật</Row>
             <Form.Item name="updated_by" className="w-full">
               <Input
                 name="updated_by"
@@ -298,7 +283,7 @@ const Profile = () => {
             </Form.Item>
           </Col>
           <Col className="px-3 pt-2 flex flex-col gap-2 rounded-lg border border-white bg-slate-200/50">
-            <Row className="">Ngày cập nhật</Row>
+            <Row className="min-h-8">Ngày cập nhật</Row>
             <Form.Item name="updated_date" className="w-full">
               <DatePicker
                 name="updated_date"

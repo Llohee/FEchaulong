@@ -5,16 +5,23 @@ import Avatar from "../../ui/avatar/avatar";
 import TeamAvatar from "../../ui/avatar/teamavatar";
 import { Link } from "react-router-dom";
 import Loading from "../../ui/Loading/loading";
+import CreateTeam from "./modal/create-team";
 
 const Teams = () => {
   const { allTeams, loading } = useGetAllTeams();
   const { userLogin } = useLoginForm();
   const roles = userLogin?.role ?? [];
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="sub_container">
       <div className="flex px-8 py-4 justify-end mt-8">
         {roles.includes("admin") && (
-          <button className="bg-slate-600 flex items-center gap-2 border-2 rounded-md px-2 py-1">
+          <button
+            onClick={() => {
+              setIsOpen(true);
+            }}
+            className="bg-slate-600 flex items-center gap-2 border-2 rounded-md px-2 py-1"
+          >
             <svg
               width="18px"
               height="18px"
@@ -54,6 +61,9 @@ const Teams = () => {
         )}
       </div>
       {loading ? <Loading /> : <AllTeam allTeams={allTeams} />}
+      {isOpen && (
+        <CreateTeam isOpen={isOpen} closeModal={() => setIsOpen(false)} />
+      )}
     </div>
   );
 };

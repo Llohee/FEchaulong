@@ -38,6 +38,16 @@ const StuTable = () => {
       key: "email",
     },
     {
+      title: "Mã số sinh viên",
+      dataIndex: "code",
+      key: "code",
+    },
+    {
+      title: "Trường học",
+      dataIndex: "school",
+      key: "school",
+    },
+    {
       title: "Số điện thoại",
       dataIndex: "phone",
       key: "phone",

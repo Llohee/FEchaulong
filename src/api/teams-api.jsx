@@ -73,12 +73,28 @@ export const useGetAllTeams = () => {
       setLoading(false);
     }
   };
+  const CreateAssignment = async (values, closeModal) => {
+    try {
+      const url = `${process.env.REACT_APP_PUBLIC_BACK_END_DOMAIN}/teams/create`;
+      const response = await axios.post(url, values, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      message.success(response.data.message);
+      closeModal();
+    } catch (error) {
+      setErrorMessage(error.response.data.message);
+      message.error(error.response.data.error);
+    }
+  };
 
   return {
     loading,
     allTeams,
     teamById,
     getTeambyid,
+    CreateAssignment,
     addUser,
     errorMessage,
   };

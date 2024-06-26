@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Row, Col, Form, Input, DatePicker, Space } from "antd";
+import { Row, Col, Form, Input, DatePicker, Space, Button } from "antd";
 import { useCreateStu } from "../../../api/create-stu";
 import {
   passwordRegex,
@@ -29,7 +29,7 @@ const UserCreateForm = ({ closeModal }) => {
               message: "Hãy điền họ và tên!",
             },
           ]}
-          className="p-3 rounded-lg border border-white bg-white"
+          className="p-3 rounded-lg border border-white bg-slate-200/50"
         >
           <Row className="flex gap-2 w-full">
             <Col>
@@ -52,7 +52,7 @@ const UserCreateForm = ({ closeModal }) => {
           //     message: "Hãy điền ngày tháng năm sinh!",
           //   },
           // ]}
-          className="p-3 rounded-lg border border-white bg-white"
+          className="p-3 rounded-lg border border-white bg-slate-200/50"
         >
           <Row className="flex gap-2">
             <Col>
@@ -78,7 +78,7 @@ const UserCreateForm = ({ closeModal }) => {
               message: "Sai định dạng Email",
             },
           ]}
-          className="p-3 rounded-lg border border-white bg-white"
+          className="p-3 rounded-lg border border-white bg-slate-200/50"
         >
           <Row className="flex gap-2">
             <Col>
@@ -106,7 +106,7 @@ const UserCreateForm = ({ closeModal }) => {
                 "Ít nhất 9 kí tự bao gồm chữ hoa, chữ thường, số và kí tự đặc biệt",
             },
           ]}
-          className="p-3 rounded-lg border border-white bg-white"
+          className="p-3 rounded-lg border border-white bg-slate-200/50"
         >
           <Row className="flex gap-2">
             <Col>
@@ -142,7 +142,7 @@ const UserCreateForm = ({ closeModal }) => {
               },
             }),
           ]}
-          className="p-3 rounded-lg border border-white bg-white"
+          className="p-3 rounded-lg border border-white bg-slate-200/50"
         >
           <Row className="flex gap-2">
             <Col>
@@ -165,7 +165,7 @@ const UserCreateForm = ({ closeModal }) => {
               message: "Hãy điền mã số sinh viên!",
             },
           ]}
-          className="p-3 rounded-lg border border-white bg-white"
+          className="p-3 rounded-lg border border-white bg-slate-200/50"
         >
           <Row className="flex gap-2">
             <Col>
@@ -188,7 +188,7 @@ const UserCreateForm = ({ closeModal }) => {
               message: "Hãy điền trường học!",
             },
           ]}
-          className="p-3 rounded-lg border border-white bg-white"
+          className="p-3 rounded-lg border border-white bg-slate-200/50"
         >
           <Row className="flex gap-2">
             <Col>
@@ -216,7 +216,7 @@ const UserCreateForm = ({ closeModal }) => {
               message: "Sai định dạng số điện thoại",
             },
           ]}
-          className="p-3 rounded-lg border border-white bg-white"
+          className="p-3 rounded-lg border border-white bg-slate-200/50"
         >
           <Row className="flex gap-2">
             <Col>
@@ -240,7 +240,7 @@ const UserCreateForm = ({ closeModal }) => {
               message: "Hãy điền địa chỉ!",
             },
           ]}
-          className="p-3 rounded-lg border border-white bg-white col-span-2"
+          className="p-3 rounded-lg border border-white bg-slate-200/50 col-span-2"
         >
           <Row className="flex gap-2">
             <Row className="mb-2">Địa chỉ</Row>
@@ -250,14 +250,14 @@ const UserCreateForm = ({ closeModal }) => {
           </Row>
         </Form.Item>
       </Row>
-      <Row className="flex justify-between px-6 py-4 shadow-top bg-white sticky bottom-0 ">
+      <Row className="flex justify-between px-6 py-4 shadow-top bg-slate-200 sticky bottom-0">
         <Col>
-          <button onClick={closeModal}>Hủy</button>
+          <Button onClick={closeModal}>Hủy</Button>
         </Col>
         <Col>
-          <button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit">
             Tạo mới
-          </button>
+          </Button>
         </Col>
       </Row>
     </Form>
