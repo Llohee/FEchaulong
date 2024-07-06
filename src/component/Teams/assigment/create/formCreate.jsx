@@ -1,5 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { Row, Col, Form, Input, DatePicker, Space, Upload, Button } from "antd";
+import React, { useState } from "react";
+import {
+  Row,
+  Col,
+  Form,
+  Input,
+  DatePicker,
+  Upload,
+  Button,
+  message,
+} from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { UploadOutlined } from "@ant-design/icons";
 import { useAssigment } from "../../../../api/assignment";
@@ -10,22 +19,33 @@ import ConfirmCreateAssignment from "./confirm-create-assignment";
 const AssignmentCreateForm = ({ closeModal }) => {
   const [file, setFile] = useState(null);
   const { createAssignment } = useAssigment();
-  const Teamid = useParams();
+  const { id: teamId } = useParams();
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+
   const handleFileChange = ({ file }) => {
     setFile(file);
   };
+
   const handleSubmit = (values) => {
-    createAssignment(Teamid.id, values, file);
+    console.log("Team ID:", teamId);
+    console.log("Form Values:", values);
+    console.log("File:", file);
+    createAssignment(teamId, values, file);
   };
+
+  const [form] = Form.useForm();
+
   return (
     <>
       <Form
-        onFinish={handleSubmit}
-        // onFinishFailed={onFinishFailed}
+        form={form}
         autoComplete="off"
         className="flex flex-col gap-4 pt-4"
+        onFinish={(values) => {
+          handleSubmit(values);
+          setOpenConfirmModal(true);
+        }}
       >
         <Col className="w-full flex flex-col gap-2">
           <Form.Item
@@ -33,7 +53,8 @@ const AssignmentCreateForm = ({ closeModal }) => {
             label="Tên bài tập"
             rules={[
               {
-                message: "Hãy tên bài tập!",
+                required: true,
+                message: "Hãy nhập tên bài tập!",
               },
             ]}
             className="px-3"
@@ -44,8 +65,6 @@ const AssignmentCreateForm = ({ closeModal }) => {
                   name="name"
                   placeholder="Nhập tên bài tập"
                   type="text"
-                  onFocus={null}
-                  required
                   className="bg-white px-4 py-2 rounded-lg text-sm bg-inherit focus:outline-none w-96 "
                 />
               </Col>
@@ -56,6 +75,7 @@ const AssignmentCreateForm = ({ closeModal }) => {
             label="Mô tả bài tập"
             rules={[
               {
+                required: true,
                 message: "Nhập mô tả",
               },
             ]}
@@ -94,10 +114,7 @@ const AssignmentCreateForm = ({ closeModal }) => {
             <Button onClick={() => setIsOpen(true)}>Hủy</Button>
           </Col>
           <Col>
-            <Button
-              type="primary"
-              onClick={() => setOpenConfirmModal(true)}
-            >
+            <Button type="primary" onClick={() => form.submit()}>
               Tạo mới
             </Button>
           </Col>
@@ -107,7 +124,7 @@ const AssignmentCreateForm = ({ closeModal }) => {
         closeModal={() => setOpenConfirmModal(false)}
         closeForm={closeModal}
         isOpen={openConfirmModal}
-        handleSubmit={handleSubmit}
+        handleSubmit={() => form.submit()}
       />
       <ConfirmcloseModal
         closeModal={() => setIsOpen(false)}

@@ -11,12 +11,11 @@ const ConfirmCreateAssignment = ({
     <ConfirmModal
       isOpen={isOpen}
       title={`Xác nhận tạo mới bài tập`}
-      // description={`Thông tin cập nhật là chính xác`}
       type="Info"
       action={() => {
+        handleSubmit();
         closeModal();
         closeForm();
-        handleSubmit();
       }}
       closeModal={closeModal}
     />

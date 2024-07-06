@@ -122,27 +122,31 @@ export const useAssigment = () => {
     console.log(errorInfo);
   };
   const createAssignment = async (Teamid, values, file) => {
-    const formData = new FormData();
-    formData.append("name", values.name);
-    formData.append("description", values.description);
-    formData.append("start_time", values.start_time);
-    formData.append("end_time", values.end_time);
-    formData.append("image", file);
-
+    // const formData = new FormData();
+    // formData.append("name", values.name);
+    // formData.append("description", values.description);
+    // formData.append("start_time", values.start_time);
+    // formData.append("end_time", values.end_time);
+    // if (file) {
+    //   formData.append("image", file);
+    // }
+  
     try {
       const url = `${process.env.REACT_APP_PUBLIC_BACK_END_DOMAIN}/teams/${Teamid}/add-homework`;
-      const response = await axios.post(url, formData, {
+      const response = await axios.post(url, values, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "multipart/form-data",
         },
       });
+      console.log(values)
       message.success(response.data.message);
     } catch (error) {
       console.error("Error submitting homework:", error);
-      message.error(error.response.data.error || "Error submitting homework");
+      message.error(error.response?.data?.error || "Error submitting homework");
     }
   };
+  
   const updateSubmission = async (Teamid, homeworkId, submissionId, values) => {
     setLoading(true);
     try {
